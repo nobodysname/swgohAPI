@@ -1,3 +1,6 @@
 node_modules
 data/PlayerData.json
 data/GuildData.json
+data/Localization.json
+data/DataData.json
+data/TestData.json
