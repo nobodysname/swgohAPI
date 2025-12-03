@@ -107,7 +107,7 @@ async function getMetadata() {
   } catch (error) {
     console.error(
       `[${new Date().toLocaleTimeString()}] Fehler beim Abrufen der Metadaten:`,
-      err.message,
+      error.message,
       )
   }
 }
