@@ -6,7 +6,7 @@ const api = require("./api")
 const compression = require('compression')
 
 const app = express();
-const PORT = 3000;
+const PORT = 3200;
 
 app.use(compression())
 
