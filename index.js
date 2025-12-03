@@ -6,7 +6,7 @@ const api = require("./api")
 const compression = require('compression')
 
 const app = express();
-const PORT = 3300;
+const PORT = 3000;
 
 app.use(compression())
 
@@ -14,6 +14,7 @@ app.use(compression())
 app.use(api2);
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Backend läuft auf http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Backend läuft auf http://0.0.0.0:${PORT}`);
 });
+
