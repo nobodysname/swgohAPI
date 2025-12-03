@@ -14,16 +14,11 @@ const PORT = 3000;
 const allowedOrigins = ['http://164.30.71.107:8080']; // Hinzufügen der tatsächlichen Frontend-Origin(s)
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Erlaube Anfragen ohne Origin (wie native Apps, curl oder same-origin)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Nicht durch CORS erlaubt'));
-    }
-  },
-  optionsSuccessStatus: 200 // Für ältere Browser/Clients
-}
+  origin: allowedOrigins,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Erlaubte Methoden
+  credentials: true, // Wichtig, falls du Cookies oder Auth-Header verwendest
+  optionsSuccessStatus: 204 // Einige Browser benötigen 204 für Preflight
+};
 
 // Statt app.use(cors())
 app.use(cors(corsOptions))
