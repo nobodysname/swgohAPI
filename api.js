@@ -15,7 +15,7 @@ const data = {
 // Funktion, um die Guild-Daten zu holen und als JSON zu speichern
 async function fetchAndSaveGuild() {
   try {
-    const response = await axios.post('http://164.30.71.107:3200/guild', {
+    const response = await axios.post('http://localhost:3200/guild', {
       payload: {
         guildId: 'NzjDFToSTi-r0Z2Sf37XpQ',
         includeRecentGuildActivityInfo: true,
@@ -46,7 +46,7 @@ async function fetchAndSaveGuild() {
 async function fetchAndSavePlayer() {
   try {
     const requests = player.map((id) =>
-      axios.post('http://164.30.71.107:3200/player', {
+      axios.post('http://localhost:3200/player', {
         payload: { playerId: id },
         enums: false,
       })
@@ -74,7 +74,7 @@ async function fetchAndSavePlayer() {
 
 async function getLocalizationData() {
   try{
-      const response = await axios.post("http://164.30.71.107:3200/localization", {
+      const response = await axios.post("http://localhost:3200/localization", {
           payload: {
               id: data.localVersion + ':ENG_US'
             },
@@ -114,7 +114,7 @@ async function getMetadata() {
 
 async function getGameData() {
   try{
-      const response = await axios.post('http://164.30.71.107:3200/data', {
+      const response = await axios.post('http://localhost:3200/data', {
               payload: {
                   version: data.gameVersion,
                   includePveUnits: false,
