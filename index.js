@@ -4,9 +4,15 @@ const api2 = require("./api2")
 const api = require("./api")
 //const gameData = require("./gameData")
 const compression = require('compression')
+const cors = require('cors')
+
+
 
 const app = express();
 const PORT = 3000;
+
+
+app.use(cors())
 
 app.use(compression())
 
