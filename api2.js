@@ -43,9 +43,11 @@ router.get("/guildroster", (req, res) => {
   try {
     const raw = JSON.parse(fs.readFileSync("./data/TestData.json", 'utf-8'))
     const wantedNames = ["Supreme Leader Kylo Ren", "Jedi Master Luke Skywalker", "Rey", "Ahsoka Tano", "Pirate King Hondo Ohnaka", "Sith Eternal Emperor", "Jedi Master Kenobi", "Jabba the Hutt", "Lord Vader", "Leia Organa", "Leviathan", "Executor", "Profundity"]
-    const result = raw.filter(unit =>
+    let result = raw.filter(unit =>
       wantedNames.includes(unit.name)
     );
+    result = result
+            .sort((a, b) => a.name.localeCompare(b.name));
     res.send(result)
     console.log("GET /guildroster")
   } catch (err) {
@@ -56,7 +58,9 @@ router.get("/guildroster", (req, res) => {
 
 router.get("/units", (req, res) => {
   try {
-    const raw = JSON.parse(fs.readFileSync("./data/TestData.json", 'utf-8'))
+    let raw = JSON.parse(fs.readFileSync("./data/TestData.json", 'utf-8'))
+    raw = raw
+        .sort((a, b) => a.name.localeCompare(b.name));
     res.send(raw)
     console.log("GET /units")
   } catch (err) {

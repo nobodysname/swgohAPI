@@ -27,11 +27,9 @@ const convertPlayer = (data) => {
 
 const convertData = (data) => {
     try {
-        //hier gäbe es auch Informationen über Datacrons, Lightspeedbundles und tokens
-        let temp = (({battleTargetingRule, categories, modRecommendation, skill, units, territoryBattleDefinition}) => ({battleTargetingRule, categories, modRecommendation, skill, units, territoryBattleDefinition})) (data)
-        const allowed = ["baseId", "id", "legend", "descKey", "nameKey"]
-        temp.units = temp.units.map(obj=> Object.fromEntries(Object.entries(obj).filter(([key, _]) => allowed.includes(key))))
-        return temp
+        const allowed = ["baseId", "id", "legend", "descKey", "nameKey", "unitPrefab"]
+        data.units = data.units.map(obj=> Object.fromEntries(Object.entries(obj).filter(([key, _]) => allowed.includes(key))))
+        return data
     } catch (error) {
         console.log(error.message)
     }
@@ -51,7 +49,13 @@ const filterUnitNames = (text) => {
                 name: value.trim()
             });
             }
-            const filtered = entries.filter(e => !e.nameKey.startsWith("UNIT_WIN_") && !e.nameKey.startsWith("UNIT_KILL_") && !e.nameKey.startsWith("UNIT_BUNDLE_"));
+            let filtered = entries.filter(e => !e.nameKey.startsWith("UNIT_WIN_") && !e.nameKey.startsWith("UNIT_KILL_") && !e.nameKey.startsWith("UNIT_BUNDLE_"));
+            for(let i = 0; i < filtered.length; i++){
+                if(filtered[i].nameKey === "UNIT_SLAVE1_NAME_V2"){
+                    filtered[i].nameKey = "UNIT_SLAVE1_NAMEV2"
+                    break;
+                }
+            }
             return filtered
     } catch (error) {
         console.log(error.message)
@@ -81,7 +85,6 @@ const connectUnits = (player) => {
         }
         const result = Array.from(unitsMap2.values());
         return result
-    
     } catch (error) {
         console.log(error.message)
     }

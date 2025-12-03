@@ -2,7 +2,7 @@
 const express = require('express')
 const api2 = require("./api2")
 const api = require("./api")
-const gameData = require("./gameData")
+//const gameData = require("./gameData")
 const compression = require('compression')
 
 const app = express();
