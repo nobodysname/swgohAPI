@@ -11,8 +11,22 @@ const cors = require('cors')
 const app = express();
 const PORT = 3000;
 
+const allowedOrigins = ['http://164.30.71.107:8080']; // Hinzufügen der tatsächlichen Frontend-Origin(s)
 
-app.use(cors())
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Erlaube Anfragen ohne Origin (wie native Apps, curl oder same-origin)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Nicht durch CORS erlaubt'));
+    }
+  },
+  optionsSuccessStatus: 200 // Für ältere Browser/Clients
+}
+
+// Statt app.use(cors())
+app.use(cors(corsOptions))
 
 app.use(compression())
 
