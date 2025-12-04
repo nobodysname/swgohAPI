@@ -4,3 +4,4 @@ data/GuildData.json
 data/Localization.json
 data/DataData.json
 data/TestData.json
+.env

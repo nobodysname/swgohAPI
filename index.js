@@ -1,35 +1,47 @@
-// index.jsimport express from "express";
 const express = require('express')
+const api = require('./api')
 const api2 = require("./api2")
-const api = require("./api")
-//const gameData = require("./gameData")
 const compression = require('compression')
 const cors = require('cors')
-
-
+const fs = require('fs')
 
 const app = express();
 const PORT = 3000;
 
-const allowedOrigins = ['http://164.30.71.107:8080']; // Hinzufügen der tatsächlichen Frontend-Origin(s)
-
 const corsOptions = {
-  origin: allowedOrigins,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Erlaubte Methoden
-  credentials: true, // Wichtig, falls du Cookies oder Auth-Header verwendest
-  optionsSuccessStatus: 204 // Einige Browser benötigen 204 für Preflight
+  origin: '*',
+  optionSuccessStatus: 200,
+  methods: ["GET", "PUT", "POST", "DELETE", "PATCH"]
 };
 
-// Statt app.use(cors())
-app.use(cors(corsOptions))
+const certPath = '/etc/ssl/ginwalkers'
 
-app.use(compression())
+let options
+try {
+  options = {
+    key: fs.readFileSync(`${certPath}/privkey.pem`),
+    cert: fs.readFileSync(`${certPath}/fullchain.pem`),
+  }
+  console.log('SSL Certificates loaded')
+} catch (err) {
+  console.error('Could not load SSL certificates:', err)
+  options = null
+}
 
-// Router mounten
+let server
+if (options) {
+  const https = require('https')
+  server = https.createServer(options, app)
+} else {
+  const http = require('http')
+  server = http.createServer(app)
+}
+
+app.use(cors(corsOptions));
+app.use(compression());
 app.use(api2);
 
-// Start server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Backend läuft auf http://0.0.0.0:${PORT}`);
-});
 
+server.listen(PORT, () => {
+  console.log("Server running on", PORT)
+})

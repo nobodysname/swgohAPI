@@ -1,0 +1,13 @@
+services:
+  ginwalkers-backend:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - /home/linux/ssl/ginwalkers:/etc/ssl/ginwalkers:ro
+    networks:
+      - swgoh-comlink
+
+networks:
+  swgoh-comlink:
+    external: true

@@ -1,6 +1,8 @@
 const fs = require('fs')
 const axios = require('axios')
 const service = require('./service/service')
+const { COMLINK_BASE } = require('./service/config');
+
 
 const MSGPACK_FILE = './data/GuildData.json'
 const MSGPACK_FILE2 = './data/PlayerData.json'
@@ -15,7 +17,7 @@ const data = {
 // Funktion, um die Guild-Daten zu holen und als JSON zu speichern
 async function fetchAndSaveGuild() {
   try {
-    const response = await axios.post('http://swgoh-comlink:3000/guild', {
+    const response = await axios.post(`${COMLINK_BASE}/guild`, {
       payload: {
         guildId: 'NzjDFToSTi-r0Z2Sf37XpQ',
         includeRecentGuildActivityInfo: true,
@@ -46,7 +48,7 @@ async function fetchAndSaveGuild() {
 async function fetchAndSavePlayer() {
   try {
     const requests = player.map((id) =>
-      axios.post('http://swgoh-comlink:3000/player', {
+      axios.post(`${COMLINK_BASE}/player`, {
         payload: { playerId: id },
         enums: false,
       })
@@ -74,7 +76,7 @@ async function fetchAndSavePlayer() {
 
 async function getLocalizationData() {
   try{
-      const response = await axios.post("http://swgoh-comlink:3000/localization", {
+      const response = await axios.post(`${COMLINK_BASE}/localization`, {
           payload: {
               id: data.localVersion + ':ENG_US'
             },
@@ -98,7 +100,7 @@ async function getLocalizationData() {
 
 async function getMetadata() {
   try{
-    const response = await axios.post("http://swgoh-comlink:3000/metadata")
+    const response = await axios.post(`${COMLINK_BASE}/metadata`)
     data.gameVersion = response.data.latestGamedataVersion
     data.localVersion = response.data.latestLocalizationBundleVersion
     console.log(
@@ -114,7 +116,7 @@ async function getMetadata() {
 
 async function getGameData() {
   try{
-      const response = await axios.post('http://swgoh-comlink:3000/data', {
+      const response = await axios.post(`${COMLINK_BASE}/data`, {
               payload: {
                   version: data.gameVersion,
                   includePveUnits: false,
