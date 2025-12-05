@@ -5,6 +5,8 @@ const compression = require('compression')
 const cors = require('cors')
 const fs = require('fs')
 
+require('dotenv').config();
+
 const app = express();
 const PORT = 3000;
 
@@ -13,6 +15,8 @@ const corsOptions = {
   optionSuccessStatus: 200,
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"]
 };
+
+console.log(process.env.NODE_ENV)
 
 const certPath = '/etc/ssl/ginwalkers'
 

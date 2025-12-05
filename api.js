@@ -1,7 +1,7 @@
 const fs = require('fs')
 const axios = require('axios')
 const service = require('./service/service')
-const { COMLINK_BASE } = require('./service/config');
+const COMLINK_BASE = 'http://164.30.71.107:3200';
 
 
 const MSGPACK_FILE = './data/GuildData.json'
