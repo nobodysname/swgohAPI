@@ -23,6 +23,7 @@ router.post("/getGuild", async (req, res) => {
       }
       
     }
+    console.log("ID: ", req.body)
     const response = await axios.post("http://164.30.71.107:3200/guild", {
       payload: {
         guildId: req.body.id,
@@ -30,7 +31,6 @@ router.post("/getGuild", async (req, res) => {
       },
       enums: false,
     })
-    console.log("ID: ", req.body)
     const convertedData = service.convertGuild(response.data)
     delete response
     const guildmember = convertedData.guild.member.map((m) => m.playerId)
