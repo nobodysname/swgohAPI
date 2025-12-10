@@ -30,6 +30,7 @@ router.post("/getGuild", async (req, res) => {
       },
       enums: false,
     })
+    console.log("ID: ", req.body)
     const convertedData = service.convertGuild(response.data)
     delete response
     const guildmember = convertedData.guild.member.map((m) => m.playerId)
