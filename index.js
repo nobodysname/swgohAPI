@@ -8,6 +8,7 @@ const fs = require('fs')
 require('dotenv').config();
 
 const app = express();
+app.use(express.json())
 const PORT = 3000;
 
 const corsOptions = {
@@ -44,6 +45,7 @@ if (options) {
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(api2);
+
 
 
 server.listen(PORT, () => {

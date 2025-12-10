@@ -7,6 +7,7 @@ const COMLINK_BASE = 'http://164.30.71.107:3200';
 const MSGPACK_FILE = './data/GuildData.json'
 const MSGPACK_FILE2 = './data/PlayerData.json'
 const MSGPACK_FILE3 = './data/DataData.json'
+const MSGPACK_FILE4 = './data/SkillData.json'
 const FETCH_INTERVAL = 60 * 60 * 1000 // 60 Minuten in Millisekunden
 var player;
 const data = {
@@ -140,6 +141,31 @@ async function getGameData() {
   }
 }
 
+async function getSkillData(){
+  try{
+    const response = await axios.post(`${COMLINK_BASE}/data`, {
+            payload: {
+                version: data.gameVersion,
+                includePveUnits: false,
+            requestSegment: 1
+        },
+        enums: false
+    })
+    //const temp = service.convertSkillData(response.data)
+    const temp = response.data.skill
+  
+    fs.writeFileSync(MSGPACK_FILE4, JSON.stringify(temp, null, 2), 'utf-8')
+    console.log(
+    `[${new Date().toLocaleTimeString()}] SkillGame-Daten gespeichert`,
+    )
+} catch (err) {
+    console.error(
+    `[${new Date().toLocaleTimeString()}] Fehler beim Abrufen der Game-Daten:`,
+    err.message,
+    )
+}
+}
+
 function formatData() {
   try {
     const player = JSON.parse(fs.readFileSync("./data/PlayerData.json"))
@@ -168,6 +194,7 @@ async function updateAll(){
   await fetchAndSavePlayer()
   await getMetadata()
   await getGameData()
+  await getSkillData()
   await getLocalizationData()
   formatData()
 }
