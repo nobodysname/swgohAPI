@@ -3,7 +3,8 @@ const express = require("express")
 const fs = require("fs");
 const service = require("./service/service");
 const { default: axios } = require("axios");
-
+const strategyAuth = require('./strategyAuth')
+const { db } = require('./db')
 
 const router = express.Router();
 
@@ -134,6 +135,141 @@ router.get("/units", (req, res) => {
     res.status(500).json({ error: "Fehler beim berechnen der Units: "+ err.message });
   }
 })
+
+// routes/strategy.js
+
+router.get('/strategy/:templateId', strategyAuth('viewer'), (req, res) => {
+  const templateId = Number(req.params.templateId)
+
+  const template = db.prepare(`
+    SELECT * FROM strategy_templates WHERE id = ?
+  `).get(templateId)
+
+  if (!template) {
+    return res.status(404).json({ error: 'Template not found' })
+  }
+
+  const zones = db.prepare(`
+    SELECT z.id as zoneId, z.zone_key, r.*
+    FROM strategy_zones z
+    LEFT JOIN strategy_rows r ON r.zone_id = z.id
+    WHERE z.template_id = ?
+    ORDER BY z.zone_key, r.position
+  `).all(templateId)
+
+  // Strukturieren
+  const structured = {}
+  for (const row of zones) {
+    if (!structured[row.zone_key]) {
+      structured[row.zone_key] = []
+    }
+
+    if (row.id) {
+      structured[row.zone_key].push({
+        rowKey: row.row_key,
+        team: row.team_name,
+        amount: row.amount,
+        note: row.note,
+        position: row.position,
+        rowId: row.id
+      })
+    }    
+  }
+
+  res.json({
+    role: req.strategyRole,
+    template,
+    zones: structured
+  })
+})
+
+router.put('/strategy/row/:rowId', strategyAuth('admin'), (req, res) => {
+  const rowId = Number(req.params.rowId)
+  const { team, amount, note } = req.body
+
+  db.prepare(`
+    UPDATE strategy_rows
+    SET team_name = ?, amount = ?, note = ?
+    WHERE id = ?
+  `).run(team ?? '', amount ?? '', note ?? '', rowId)
+
+  res.json({ success: true })
+})
+
+router.post('/strategy/template', strategyAuth('admin'), (req, res) => {
+  const { name, description } = req.body
+
+  const result = db.prepare(`
+    INSERT INTO strategy_templates (name, description)
+    VALUES (?, ?)
+  `).run(name, description ?? '')
+
+  res.json({ templateId: result.lastInsertRowid })
+})
+
+router.post('/strategy/row', strategyAuth('admin'), (req, res) => {
+  const { zone, team, amount, note } = req.body
+
+  if (!zone) {
+    return res.status(400).json({ error: 'zone required' })
+  }
+
+  // Zone-ID holen
+  const zoneRow = db.prepare(`
+    SELECT id FROM strategy_zones WHERE zone_key = ?
+  `).get(zone)
+
+  if (!zoneRow) {
+    return res.status(404).json({ error: 'Zone not found' })
+  }
+
+  // nächste Position bestimmen
+  const maxPos = db.prepare(`
+    SELECT COALESCE(MAX(position), -1) AS maxPos
+    FROM strategy_rows
+    WHERE zone_id = ?
+  `).get(zoneRow.id).maxPos
+
+  const result = db.prepare(`
+    INSERT INTO strategy_rows (zone_id, row_key, team_name, amount, note, position)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run(
+    zoneRow.id,
+    crypto.randomUUID(),
+    team ?? '',
+    amount ?? '',
+    note ?? '',
+    maxPos + 1
+  )
+
+  res.json({
+    rowId: result.lastInsertRowid,
+    team: team ?? '',
+    amount: amount ?? '',
+    note: note ?? '',
+    position: maxPos + 1
+  })
+})
+
+router.delete('/strategy/row/:rowId', strategyAuth('admin'), (req, res) => {
+  const rowId = Number(req.params.rowId)
+
+  const result = db.prepare(`
+    DELETE FROM strategy_rows
+    WHERE id = ?
+  `).run(rowId)
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'Row not found' })
+  }
+
+  res.json({ success: true })
+})
+
+
+
+
+
 
 async function fetchAndSavePlayer(player) {
   try {

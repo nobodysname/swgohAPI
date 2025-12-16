@@ -7,3 +7,6 @@ data/TestData.json
 data/latestGuild.json
 data/SkillData.json
 .env
+data/guildstrategy.db
+data/guildstrategy.db-shm
+data/guildstrategy.db-wal
