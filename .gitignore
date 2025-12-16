@@ -7,6 +7,3 @@ data/TestData.json
 data/latestGuild.json
 data/SkillData.json
 .env
-data/strategy.sqlite
-data/strategy.sqlite-shm
-data/strategy.sqlite-wal
