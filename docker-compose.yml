@@ -11,4 +11,4 @@ services:
 
 networks:
   swgoh-comlink:
-  external: true
+    external: true
