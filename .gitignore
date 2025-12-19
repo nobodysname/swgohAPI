@@ -1,12 +1,3 @@
 node_modules
-data/PlayerData.json
-data/GuildData.json
-data/Localization.json
-data/DataData.json
-data/TestData.json
-data/latestGuild.json
-data/SkillData.json
+data
 .env
-data/strategy.sqlite
-data/strategy.sqlite-shm
-data/strategy.sqlite-wal
