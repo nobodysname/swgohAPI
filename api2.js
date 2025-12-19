@@ -193,6 +193,7 @@ router.put('/strategy/row/:rowId', strategyAuth('admin'), (req, res) => {
     WHERE id = ?
   `).run(team ?? '', amount ?? '', note ?? '', rowId)
 
+  console.log("PUT /Strategy/row")
   res.json({ success: true })
 })
 
@@ -265,8 +266,6 @@ router.delete('/strategy/row/:rowId', strategyAuth('admin'), (req, res) => {
 
   res.json({ success: true })
 })
-
-
 
 
 

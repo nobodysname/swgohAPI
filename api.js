@@ -10,6 +10,7 @@ const MSGPACK_FILE3 = './data/DataData.json'
 const MSGPACK_FILE4 = './data/SkillData.json'
 const FETCH_INTERVAL = 60 * 60 * 1000 // 60 Minuten in Millisekunden
 var player;
+var latestGameVersion = ""
 const data = {
   gameVersion: "",
   localVersion: "" 
@@ -62,6 +63,8 @@ async function fetchAndSavePlayer() {
     let responses = await Promise.all(requests)
 
     responses = service.convertPlayer(responses)
+    const skills = JSON.parse(fs.readFileSync("./data/SkillData.json", "utf8"))
+    responses = service.expandSkills(responses, skills)
 
     fs.writeFileSync(MSGPACK_FILE2, JSON.stringify(responses, null, 2), 'utf-8')
     console.log(
@@ -152,8 +155,8 @@ async function getSkillData(){
         enums: false
     })
     //const temp = service.convertSkillData(response.data)
-    const temp = response.data.skill
-  
+    let temp = response.data.skill
+    
     fs.writeFileSync(MSGPACK_FILE4, JSON.stringify(temp, null, 2), 'utf-8')
     console.log(
     `[${new Date().toLocaleTimeString()}] SkillGame-Daten gespeichert`,
@@ -190,12 +193,15 @@ function formatData() {
 }
 
 async function updateAll(){
+  await getMetadata()
+  if(latestGameVersion !== data.gameVersion){
+    await getGameData()
+    await getSkillData()
+    await getLocalizationData()
+    latestGameVersion = data.gameVersion
+  }
   await fetchAndSaveGuild()
   await fetchAndSavePlayer()
-  await getMetadata()
-  await getGameData()
-  await getSkillData()
-  await getLocalizationData()
   formatData()
 }
 

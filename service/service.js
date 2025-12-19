@@ -12,7 +12,7 @@ const convertGuild = (data) => {
 }
 const convertPlayer = (data) => {
     try {
-        const allowed = ["name", "rosterUnit"]
+        const allowed = ["name", "rosterUnit", "datacron"]
         let player = data.map(obj => Object.fromEntries(Object.entries(obj).filter(([key, _]) => allowed.includes(key))))
         const allowed2 = ["baseId", "currentTier", "currentRarity", "currentLevel", "legend", "nameKey", "relic", "definitionId", "skill"]
         for(let i = 0; i < player.length; i++){
@@ -134,27 +134,14 @@ function expandSkills(allRosterData, skillDefinitions) {
   
       // rosterUnit könnte riesig sein → also direkt bearbeiten
       for (const unit of player.rosterUnit) {
-  
+        
         for (const skill of unit.skill) {
           const def = skillMap.get(skill.id);
           if (!def) continue;
-  
-          const maxTier = def.tier.length + 1;
-  
-          const zetaTierIndex = def.tier.findIndex(t => t.isZetaTier);
-          const omicronTierIndex = def.tier.findIndex(t => t.isOmicronTier);
-  
           skill.nameKey = def.nameKey;
-          skill.maxTier = maxTier;
-          skill.isZeta = def.isZeta;
-          skill.isOmicron = def.omicronMode !== 0;
+          skill.isZeta = def.tier[skill.tier].isZetaTier;
+          skill.isOmicron = def.tier[skill.tier].isOmicronTier;
           skill.omicronArea = def.omicronMode;
-  
-          skill.hasZeta =
-            zetaTierIndex !== -1 && skill.tier >= (zetaTierIndex + 1);
-  
-          skill.hasOmicron =
-            omicronTierIndex !== -1 && skill.tier >= (omicronTierIndex + 1);
         }
       }
     }
