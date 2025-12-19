@@ -5,10 +5,6 @@ services:
       - '3000:3000'
     volumes:
       - /home/linux/ssl/ginwalkers:/etc/ssl/ginwalkers:ro
-      - ./data:/usr/src/app/data
+      - ./data:/app/data
     networks:
       - swgoh-comlink
-
-networks:
-  swgoh-comlink:
-    external: true
