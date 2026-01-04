@@ -18,6 +18,9 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "fs": "^0.0.1-security",
-    "msgpack-lite": "^0.1.26"
+    "msgpack-lite": "^0.1.26",
+    "stream-chain": "^3.4.0",
+    "stream-json": "^1.9.1",
+    "xlsx": "^0.18.5"
   }
 }

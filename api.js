@@ -8,6 +8,7 @@ const MSGPACK_FILE = './data/GuildData.json'
 const MSGPACK_FILE2 = './data/PlayerData.json'
 const MSGPACK_FILE3 = './data/DataData.json'
 const MSGPACK_FILE4 = './data/SkillData.json'
+const MSGPACK_FILE5 = './data/TBData.json'
 const FETCH_INTERVAL = 60 * 60 * 1000 // 60 Minuten in Millisekunden
 var player;
 var latestGameVersion = ""
@@ -88,7 +89,9 @@ async function getLocalizationData() {
       })
       const text = response.data['Loc_ENG_US.txt']
       const filtered = service.filterUnitNames(text);
+      const tbFiltered = service.filterTerritoryNames(text)
       
+      fs.writeFileSync('./data/TBLocalization.json', JSON.stringify(tbFiltered, null, 2), 'utf-8')
       fs.writeFileSync('./data/Localization.json', JSON.stringify(filtered, null, 2), 'utf-8')
       console.log(
           `[${new Date().toLocaleTimeString()}] Localization-Daten gespeichert`,
@@ -169,15 +172,48 @@ async function getSkillData(){
 }
 }
 
+async function getTBData(){
+  try{
+    let response = await axios.post("http://164.30.71.107:3200/data", {
+        payload:{
+            version: "0.38.1:So2YPkkwQNi9kRKsi4dIwQ",
+            includePveUnits: true,
+            items: "536870912"
+        },
+        enums: false
+     })
+    let tables = await axios.post("http://164.30.71.107:3200/data", {
+              payload:{
+                  version: "0.38.1:So2YPkkwQNi9kRKsi4dIwQ",
+                  includePveUnits: true,
+                  items: "32"
+              },
+              enums: false
+    })
+    let temp = response.data.territoryBattleDefinition[4]
+    temp.strikeZoneDefinition = service.expandSZData(temp.strikeZoneDefinition, tables.data.table)
+    tables = null
+    fs.writeFileSync(MSGPACK_FILE5, JSON.stringify(temp, null, 2), 'utf-8')
+    console.log(
+    `[${new Date().toLocaleTimeString()}] TBGame-Daten gespeichert`,
+    )
+} catch (err) {
+    console.error(
+    `[${new Date().toLocaleTimeString()}] Fehler beim Abrufen der TB-Daten:`,
+    err.message,
+    )
+}
+}
+
 function formatData() {
   try {
-    const player = JSON.parse(fs.readFileSync("./data/PlayerData.json"))
-    const data = JSON.parse(fs.readFileSync("./data/DataData.json"))
-    const local = JSON.parse(fs.readFileSync("./data/Localization.json", "utf8"))
+    let player = JSON.parse(fs.readFileSync("./data/PlayerData.json"))
+    let data = JSON.parse(fs.readFileSync("./data/DataData.json"))
+    let local = JSON.parse(fs.readFileSync("./data/Localization.json", "utf8"))
     const connectedData = service.connectData(player, data, local)
-    delete player 
-    delete data
-    delete local
+    player = null
+    data = null
+    local = null
     const connected = service.connectUnits(connectedData)
     fs.writeFileSync('./data/TestData.json', JSON.stringify(connected, null, 2), 'utf-8')
 
@@ -198,6 +234,7 @@ async function updateAll(){
     await getGameData()
     await getSkillData()
     await getLocalizationData()
+    await getTBData()
     latestGameVersion = data.gameVersion
   }
   await fetchAndSaveGuild()

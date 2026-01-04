@@ -25,25 +25,25 @@ router.post("/getGuild", async (req, res) => {
       
     }
     console.log("ID: ", req.body)
-    const response = await axios.post("http://164.30.71.107:3200/guild", {
+    let response = await axios.post("http://164.30.71.107:3200/guild", {
       payload: {
         guildId: req.body.id,
         includeRecentGuildActivityInfo: true,
       },
       enums: false,
     })
-    const convertedData = service.convertGuild(response.data)
-    delete response
-    const guildmember = convertedData.guild.member.map((m) => m.playerId)
-    delete convertedData
-    const player = await fetchAndSavePlayer(guildmember)
-    delete guildmember
-    const data = JSON.parse(fs.readFileSync("./data/DataData.json"))
-    const local = JSON.parse(fs.readFileSync("./data/Localization.json", "utf8"))
+    let convertedData = service.convertGuild(response.data)
+    response = null
+    let guildmember = convertedData.guild.member.map((m) => m.playerId)
+    convertedData = null
+    let player = await fetchAndSavePlayer(guildmember)
+    guildmember = null
+    let data = JSON.parse(fs.readFileSync("./data/DataData.json"))
+    let local = JSON.parse(fs.readFileSync("./data/Localization.json", "utf8"))
     const connectedData = service.connectData(player, data, local)
-    delete player 
-    delete data
-    delete local
+    player = null
+    data = null
+    local = null
     let connected = service.connectUnits(connectedData)  
     res.send(connected)
     const result = { name: req.body.name , data: connected}
@@ -136,7 +136,78 @@ router.get("/units", (req, res) => {
   }
 })
 
-// routes/strategy.js
+
+// A) ROUTE: Simulation ausführen (Admin Only, speichert JSON)
+router.post("/tb/simulate", strategyAuth('admin'), async (req, res) => {
+  try {
+    // 1. Parameter aus dem Frontend empfangen
+    const { guildGP, strikeZoneSuccessRates } = req.body;
+
+    if (!guildGP || !strikeZoneSuccessRates) {
+      return res.status(400).json({ error: "Fehlende Parameter: guildGP oder strikeZoneSuccessRates" });
+    }
+
+    // 2. Daten einlesen (Wie gehabt)
+    let raw = JSON.parse(fs.readFileSync("./data/TBData.json", 'utf-8'));
+    let text = JSON.parse(fs.readFileSync("./data/TBLocalization.json", "utf-8"));
+    let opData = JSON.parse(fs.readFileSync("./data/OpData.json", "utf-8"));
+    const units = JSON.parse(fs.readFileSync("./data/TestData.json", 'utf-8')); // Oder aus DB laden, falls vorhanden
+
+    // 3. Service Logik
+    let territoryMap = service.buildLocalizationMap(text);
+    text = null;
+    let planets = service.buildPlanets(raw.conflictZoneDefinition, raw.strikeZoneDefinition, raw.reconZoneDefinition);
+    raw = null;
+    planets = service.applyPlanetNames(planets, territoryMap);
+    planets = service.attachOpUnitsToPlanets(planets, opData);
+    territoryMap = null;
+
+    // 4. Simulation starten (Mit Parametern aus req.body!)
+    const finalPlan = service.simulateFullCampaign(
+      units, 
+      Number(guildGP), 
+      planets, 
+      strikeZoneSuccessRates
+    );
+    
+    finalPlan.simulationParams = {
+        guildGP: guildGP,
+        successRates: strikeZoneSuccessRates
+    };
+
+    // 5. Ergebnis speichern
+    fs.writeFileSync("./data/LatestSimulation.json", JSON.stringify(finalPlan, null, 2));
+
+    console.log("POST /tb/simulate - Calculation saved.");
+    res.json(finalPlan);
+
+  } catch (err) {
+    console.error("Fehler bei der TB Simulation:", err.message);
+    res.status(500).json({ error: "Simulation failed: " + err.message });
+  }
+});
+
+// B) ROUTE: Letztes Ergebnis abrufen (Public / Read-Only)
+router.get("/tb/latest", async (req, res) => {
+  try {
+    const filePath = "./data/LatestSimulation.json";
+    
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: "Keine Simulationsdaten vorhanden." });
+    }
+
+    const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    res.json(data);
+    
+  } catch (err) {
+    console.error("Fehler beim Laden der TB Daten:", err.message);
+    res.status(500).json({ error: "Laden fehlgeschlagen: " + err.message });
+  }
+});
+
+router.post("/tb/auth", strategyAuth('admin'), (req, res) => {
+  res.json({ success: true });
+});
 
 router.get('/strategy/:templateId', strategyAuth('viewer'), (req, res) => {
   const templateId = Number(req.params.templateId)
@@ -298,5 +369,9 @@ async function fetchAndSavePlayer(player) {
     )
   }
 }
+
+
+
+
 
 module.exports = router
