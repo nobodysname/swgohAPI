@@ -150,7 +150,7 @@ router.post("/tb/simulate", strategyAuth('admin'), async (req, res) => {
     // 2. Daten einlesen (Wie gehabt)
     let raw = JSON.parse(fs.readFileSync("./data/TBData.json", 'utf-8'));
     let text = JSON.parse(fs.readFileSync("./data/TBLocalization.json", "utf-8"));
-    let opData = JSON.parse(fs.readFileSync("./data/OpData.json", "utf-8"));
+    let opData = JSON.parse(fs.readFileSync("./opData/OpData.json", "utf-8"));
     const units = JSON.parse(fs.readFileSync("./data/TestData.json", 'utf-8')); // Oder aus DB laden, falls vorhanden
 
     // 3. Service Logik

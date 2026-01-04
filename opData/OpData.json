@@ -1,0 +1,2403 @@
+[
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "General Grievous", "amount": 2 },
+            { "name": "Emperor Palpatine", "amount": 2 },
+            { "name": "Ugnaught", "amount": 1 },
+            { "name": "Darth Sion", "amount": 1 },
+            { "name": "BT-1", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Darth Maul", "amount": 2 },
+            { "name": "Imperial Super Commando", "amount": 1 },
+            { "name": "Gamorrean Guard", "amount": 1 },
+            { "name": "Gauntlet Starfighter", "amount": 1 },
+            { "name": "Geonosian Spy's Starfighter", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 2 },
+            { "name": "Grand Admiral Thrawn", "amount": 2 },
+            { "name": "Ugnaught", "amount": 1 },
+            { "name": "Darth Sidious", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Droideka", "amount": 1 },
+            { "name": "Nute Gunray", "amount": 1 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "Jango Fett", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Darth Traya", "amount": 2 },
+            { "name": "Chimaera", "amount": 2 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "0-0-0", "amount": 2 },
+            { "name": "Darth Vader", "amount": 1 },
+            { "name": "Ninth Sister", "amount": 1 },
+            { "name": "Sith Assassin", "amount": 1 },
+            { "name": "BT-1", "amount": 1 },
+            { "name": "TIE Fighter Pilot", "amount": 1 },
+            { "name": "Hound's Tooth", "amount": 1 },
+            { "name": "Imperial TIE Bomber", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-4",
+        "units": [
+             { "name": "Darth Traya", "amount": 1 },
+            { "name": "Darth Revan", "amount": 2 },
+            { "name": "General Grievous", "amount": 2 },
+            { "name": "0-0-0", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Ugnaught", "amount": 1 },
+            { "name": "Darth Sion", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Embo", "amount": 1 },
+            { "name": "Hound's Tooth", "amount": 1 },
+            { "name": "B1 Battle Droid", "amount": 1 },
+            { "name": "Dark Trooper", "amount": 1 },
+            { "name": "IG-86 Sentinel Droid", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Chimaera", "amount": 2 },
+            { "name": "Canderous Ordo", "amount": 1 },
+            { "name": "Darth Traya", "amount": 3 },
+            { "name": "Tusken Shaman", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 },
+            { "name": "First Order SF TIE Pilot", "amount": 1 },
+            { "name": "Mara Jade, The Emperor's Hand", "amount": 1 },
+            { "name": "Boba Fett", "amount": 1 },
+            { "name": "Nightsister Initiate", "amount": 1 },
+            { "name": "0-0-0", "amount": 1 },
+            { "name": "Droideka", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Mustafar",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Darth Revan", "amount": 2 },
+            { "name": "General Grievous", "amount": 1 },
+            { "name": "Canderous Ordo", "amount": 1 },
+            { "name": "Darth Sidious", "amount": 1 },
+            { "name": "First Order SF TIE Pilot", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Imperial TIE Fighter", "amount": 1 },
+            { "name": "Fifth Brother", "amount": 1 },
+            { "name": "First Order Officer", "amount": 2 },
+            { "name": "Darth Vader", "amount": 1 },
+            { "name": "Count Dooku", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "General Skywalker", "amount": 2 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Greef Karga", "amount": 1 },
+            { "name": "CC-2224 \"Cody\"", "amount": 1 },
+            { "name": "L3-37", "amount": 1 },
+            { "name": "Barriss Offee", "amount": 1 },
+            { "name": "Phantom II", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "General Skywalker", "amount": 3 },
+            { "name": "BB-8", "amount": 2 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 2 },
+            { "name": "Chewbacca", "amount": 2 },
+            { "name": "Resistance X-wing", "amount": 1 },
+            { "name": "Jyn Erso", "amount": 1 },
+            { "name": "Sana Starros", "amount": 2 },
+            { "name": "Home One", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 3 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Threepio & Chewie", "amount": 1 },
+            { "name": "Umbaran Starfighter", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Ahsoka Tano (Fulcrum)", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "The Armorer", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "General Skywalker", "amount": 2 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Han Solo", "amount": 2 },
+            { "name": "Lobot", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "Plo Koon's Jedi Starfighter", "amount": 1 },
+            { "name": "Visas Marr", "amount": 1 },
+            { "name": "Anakin's Eta-2 Starfighter", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 3 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "Teebo", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Kuiil", "amount": 1 },
+            { "name": "Phantom II", "amount": 1 },
+            { "name": "Threepio & Chewie", "amount": 1 }
+        ]
+    },
+    {
+        
+        "name": "Coruscant",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "General Skywalker", "amount": 3 },
+            { "name": "Hermit Yoda", "amount": 2 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Sabine Wren", "amount": 1 },
+            { "name": "Amilyn Holdo", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Zaalbar", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Eeth Koth", "amount": 1 },
+            { "name": "Ima-Gun Di", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Anakin's Eta-2 Starfighter", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 2 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "Hunter", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "BT-1", "amount": 1 },
+            { "name": "Geonosian Brood Alpha", "amount": 1 },
+            { "name": "Poe Dameron", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Ghost", "amount": 1 },
+            { "name": "Paploo", "amount": 1 },
+            { "name": "Threepio & Chewie", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Bossk", "amount": 1 },
+            { "name": "Clone Sergeant's ARC-170", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Darth Traya", "amount": 2 },
+            { "name": "Darth Vader", "amount": 1 },
+            { "name": "Kylo Ren's Command Shuttle", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Plo Koon's Jedi Starfighter", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "T3-M4", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "TIE Silencer", "amount": 1 },
+            { "name": "Malevolence", "amount": 1 },
+            { "name": "Geonosian Brood Alpha", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Darth Maul", "amount": 1 },
+            { "name": "Colonel Starck", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Corellia",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "TIE/IN Interceptor Prototype", "amount": 3 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Talia", "amount": 1 },
+            { "name": "Admiral Piett", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Darth Sion", "amount": 1 },
+            { "name": "Jawa Engineer", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 2 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Scimitar", "amount": 1 },
+            { "name": "Executrix", "amount": 1 },
+            { "name": "HK-47", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Darth Talon", "amount": 1 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "Kylo Ren (Unmasked)", "amount": 1 },
+            { "name": "TIE Reaper", "amount": 1 },
+            { "name": "B2 Super Battle Droid", "amount": 1 },
+            { "name": "Droideka", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Revan", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 },
+            { "name": "First Order Officer", "amount": 1 },
+            { "name": "General Veers", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Grand Inquisitor", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "General Grievous", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "TIE Echelon", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 },
+            { "name": "First Order Officer", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Colonel Starck", "amount": 1 },
+            { "name": "B2 Super Battle Droid", "amount": 1 },
+            { "name": "Kylo Ren (Unmasked)", "amount": 1 },
+            { "name": "Malevolence", "amount": 1 },
+            { "name": "Magmatrooper", "amount": 1 },
+            { "name": "Cad Bane", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Geonosis",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Death Trooper", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Kylo Ren's Command Shuttle", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Boushh (Leia Organa)", "amount": 1 },
+            { "name": "Admiral Raddus", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Wedge Antilles", "amount": 1 },
+            { "name": "Poe Dameron's X-wing", "amount": 1 },
+            { "name": "BTL-B Y-wing Starfighter", "amount": 1 },
+            { "name": "L3-37", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "Juhani", "amount": 1 },
+            { "name": "Ghost", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Outrider", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Young Han Solo", "amount": 1 },
+            { "name": "Aayla Secura", "amount": 1 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Pao", "amount": 1 },
+            { "name": "Jedi Consular's Starfighter", "amount": 1 },
+            { "name": "ARC Trooper", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Mon Mothma", "amount": 1 },
+            { "name": "BTL-B Y-wing Starfighter", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Endurance", "amount": 1 },
+            { "name": "Greef Karga", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Ben Solo", "amount": 3 },
+            { "name": "CT-21-0408 \"Echo\"", "amount": 1 },
+            { "name": "Kanan Jarrus", "amount": 1 },
+            { "name": "Rose Tico", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 2 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "Ebon Hawk", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Enfys Nest", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "Threepio & Chewie", "amount": 1 },
+            { "name": "Greef Karga", "amount": 1 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Veteran Smuggler Chewbacca", "amount": 1 },
+            { "name": "Ghost", "amount": 1 },
+            { "name": "Bodhi Rook", "amount": 1 },
+            { "name": "CT-5555 \"Fives\"", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Omega", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Razor Crest", "amount": 3 },
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Bistan's U-wing", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "Ezra Bridger", "amount": 1 },
+            { "name": "Kanan Jarrus", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Bracca",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Razor Crest", "amount": 3 },
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "CT-7567 \"Rex\"", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Vandor Chewbacca", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Teebo", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Aayla Secura", "amount": 1 },
+            { "name": "Threepio & Chewie", "amount": 1 },
+            { "name": "Plo Koon's Jedi Starfighter", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "The Mandalorian", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 },
+            { "name": "Jawa", "amount": 1 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "Embo", "amount": 1 },
+            { "name": "Zaalbar", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "General Hux", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Snowtrooper", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Maul", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Count Dooku", "amount": 1 },
+            { "name": "Kuiil", "amount": 1 },
+            { "name": "General Veers", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Embo", "amount": 1 },
+            { "name": "Cassian's U-wing", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Admiral Ackbar", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Death Trooper", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Felucia",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Lando Calrissian", "amount": 1 },
+            { "name": "BT-1", "amount": 1 },
+            { "name": "L3-37", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "R2-D2", "amount": 2 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 2 },
+            { "name": "Mace Windu", "amount": 1 },
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Jedi Knight Anakin", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 2 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "BB-8", "amount": 2 },
+            { "name": "Ki-Adi-Mundi", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "Logray", "amount": 2 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Greef Karga", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 2 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Skiff Guard (Lando Calrissian)", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "Rey", "amount": 2 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "CT-5555 \"Fives\"", "amount": 1 },
+            { "name": "Lando's Millennium Falcon", "amount": 1 },
+            { "name": "Resistance Trooper", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Greef Karga", "amount": 1 },
+            { "name": "Hoth Rebel Scout", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "Greef Karga", "amount": 3 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "K-2SO", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Kashyyyk",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 2 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Negotiator", "amount": 1 },
+            { "name": "Resistance Trooper", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Ewok Scout", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Hoth Rebel Soldier", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Kyle Katarn", "amount": 1 },
+            { "name": "Chirrut Îmwe", "amount": 1 },
+            { "name": "Jedi Consular", "amount": 1 },
+            { "name": "Jedi Consular's Starfighter", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "MG-100 StarFortress SF-17", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 2 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Kyle Katarn", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "Home One", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Chief Chirpa", "amount": 1 },
+            { "name": "Rex's ARC-170", "amount": 1 },
+            { "name": "Jedi Knight Guardian", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Jedi Consular", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "MG-100 StarFortress SF-17", "amount": 1 },
+            { "name": "Raddus", "amount": 1 },
+            { "name": "Juhani", "amount": 1 },
+            { "name": "Kyle Katarn", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Luke Skywalker (Farmboy)", "amount": 1 },
+            { "name": "Kit Fisto", "amount": 1 },
+            { "name": "Jedi Knight Guardian", "amount": 1 },
+            { "name": "Qi'ra", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "Wrecker", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Luke Skywalker (Farmboy)", "amount": 1 },
+            { "name": "Garazeb \"Zeb\" Orrelios", "amount": 1 },
+            { "name": "Jedi Consular", "amount": 1 },
+            { "name": "Enfys Nest", "amount": 1 },
+            { "name": "Chief Chirpa", "amount": 1 },
+            { "name": "Mission Vao", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Zeffo",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 2 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Plo Koon", "amount": 1 },
+            { "name": "Chirrut Îmwe", "amount": 1 },
+            { "name": "Jedi Knight Guardian", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "Visas Marr", "amount": 1 }
+        ]
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Darth Maul", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "General Grievous", "amount": 2 },
+            { "name": "First Order SF TIE Fighter", "amount": 1 },
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "Geonosian Spy's Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "General Grievous", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Savage Opress", "amount": 1 },
+            { "name": "General Hux", "amount": 1 },
+            { "name": "Tusken Raider", "amount": 1 },
+            { "name": "Talia", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Maul", "amount": 2 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 2 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "HK-47", "amount": 1 },
+            { "name": "Dark Trooper", "amount": 1 },
+            { "name": "Sith Assassin", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Revan", "amount": 1 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Cad Bane", "amount": 1 },
+            { "name": "Mother Talzin", "amount": 1 },
+            { "name": "TIE Advanced x1", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 3 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Grand Admiral Thrawn", "amount": 1 },
+            { "name": "Seventh Sister", "amount": 1 },
+            { "name": "0-0-0", "amount": 1 },
+            { "name": "Grand Moff Tarkin", "amount": 1 },
+            { "name": "First Order SF TIE Pilot", "amount": 1 },
+            { "name": "Gar Saxon", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Dathomir",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Chimaera", "amount": 1 },
+            { "name": "Director Krennic", "amount": 1 },
+            { "name": "Tusken Raider", "amount": 1 },
+            { "name": "Embo", "amount": 1 },
+            { "name": "Imperial TIE Fighter", "amount": 1 },
+            { "name": "Aurra Sing", "amount": 1 },
+            { "name": "Geonosian Soldier's Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Cara Dune", "amount": 1 },
+            { "name": "Geonosian Spy", "amount": 1 },
+            { "name": "Tusken Chieftain", "amount": 1 },
+            { "name": "Bastila Shan (Fallen)", "amount": 1 },
+            { "name": "Chirrut Îmwe", "amount": 1 },
+            { "name": "Gauntlet Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Nightsister Acolyte", "amount": 1 },
+            { "name": "Qui-Gon Jinn", "amount": 1 },
+            { "name": "Obi-Wan Kenobi (Old Ben)", "amount": 1 },
+            { "name": "Bastila Shan (Fallen)", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Luminara Unduli", "amount": 1 },
+            { "name": "Rose Tico", "amount": 1 },
+            { "name": "Skiff Guard (Lando Calrissian)", "amount": 1 },
+            { "name": "Hunter", "amount": 1 },
+            { "name": "Ewok Scout", "amount": 1 },
+            { "name": "Mara Jade, The Emperor's Hand", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "TIE Reaper", "amount": 1 },
+            { "name": "Resistance Hero Poe", "amount": 1 },
+            { "name": "Ewok Elder", "amount": 1 },
+            { "name": "Coruscant Underworld Police", "amount": 1 },
+            { "name": "Kylo Ren (Unmasked)", "amount": 1 },
+            { "name": "Young Han Solo", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "B1 Battle Droid", "amount": 1 },
+            { "name": "Finalizer", "amount": 1 },
+            { "name": "Teebo", "amount": 1 },
+            { "name": "Hoth Rebel Scout", "amount": 1 },
+            { "name": "Bodhi Rook", "amount": 1 },
+            { "name": "HK-47", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Tatooine",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "IG-2000", "amount": 1 },
+            { "name": "Resistance Hero Finn", "amount": 1 },
+            { "name": "Barriss Offee", "amount": 1 },
+            { "name": "First Order SF TIE Fighter", "amount": 1 },
+            { "name": "Obi-Wan Kenobi (Old Ben)", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Veteran Smuggler Chewbacca", "amount": 1 },
+            { "name": "Zaalbar", "amount": 1 },
+            { "name": "Xanadu Blood", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Dash Rendar", "amount": 1 },
+            { "name": "Rebel Y-wing", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Profundity", "amount": 2 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 3 },
+            { "name": "The Mandalorian (Beskar Armor)", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "Chewbacca", "amount": 2 },
+            { "name": "Zaalbar", "amount": 1 },
+            { "name": "Xanadu Blood", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Profundity", "amount": 2 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 2 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Finn", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Ebon Hawk", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 },
+            { "name": "Chief Nebit", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 2 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Ghost", "amount": 1 },
+            { "name": "Scarif Rebel Pathfinder", "amount": 2 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "Kyle Katarn", "amount": 1 },
+            { "name": "Rey (Jedi Training)", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "Eeth Koth", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Jedi Master Kenobi", "amount": 2 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Logray", "amount": 2 },
+            { "name": "Tech", "amount": 1 },
+            { "name": "Jedi Consular", "amount": 1 },
+            { "name": "Bistan", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Plo Koon's Jedi Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Lothal",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 3 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Wedge Antilles's X-wing", "amount": 1 },
+            { "name": "Echo", "amount": 1 },
+            { "name": "Wicket", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Aayla Secura", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Nightsister Spirit", "amount": 1 },
+            { "name": "Bastila Shan (Fallen)", "amount": 1 },
+            { "name": "Embo", "amount": 1 },
+            { "name": "Snowtrooper", "amount": 1 },
+            { "name": "Darth Vader", "amount": 1 },
+            { "name": "BT-1", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Sith Eternal Emperor", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Iden Versio", "amount": 1 },
+            { "name": "Cad Bane", "amount": 1 },
+            { "name": "Nightsister Zombie", "amount": 1 },
+            { "name": "Snowtrooper", "amount": 1 },
+            { "name": "First Order Stormtrooper", "amount": 1 },
+            { "name": "Aurra Sing", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "Nightsister Initiate", "amount": 1 },
+            { "name": "TIE Silencer", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Darth Maul", "amount": 1 },
+            { "name": "Snowtrooper", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Director Krennic", "amount": 1 },
+            { "name": "HK-47", "amount": 1 },
+            { "name": "Krrsantan", "amount": 1 },
+            { "name": "Eighth Brother", "amount": 1 },
+            { "name": "Nightsister Acolyte", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Wampa", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Executor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Maul", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Seventh Sister", "amount": 1 },
+            { "name": "Aurra Sing", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 },
+            { "name": "General Veers", "amount": 1 },
+            { "name": "Mara Jade, The Emperor's Hand", "amount": 1 },
+            { "name": "Savage Opress", "amount": 1 },
+            { "name": "Second Sister", "amount": 1 },
+            { "name": "Scythe", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Haven-class Medical Station",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Executor", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "B2 Super Battle Droid", "amount": 1 },
+            { "name": "First Order TIE Pilot", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 2 },
+            { "name": "Malevolence", "amount": 1 },
+            { "name": "Dathcha", "amount": 1 },
+            { "name": "TIE Fighter Pilot", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 3 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Coruscant Underworld Police", "amount": 1 },
+            { "name": "Ebon Hawk", "amount": 1 },
+            { "name": "Jedi Consular's Starfighter", "amount": 1 },
+            { "name": "Poggle the Lesser", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Outrider", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Gamorrean Guard", "amount": 1 },
+            { "name": "Rex's ARC-170", "amount": 1 },
+            { "name": "Echo", "amount": 1 },
+            { "name": "Sith Fighter", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Aurra Sing", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Sith Eternal Emperor", "amount": 2 },
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 2 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Seventh Sister", "amount": 1 },
+            { "name": "Nightsister Initiate", "amount": 2 },
+            { "name": "Slave 1", "amount": 1 },
+            { "name": "The Mandalorian", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Rey", "amount": 2 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Baze Malbus", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Hoth Rebel Soldier", "amount": 1 },
+            { "name": "Bo-Katan Kryze", "amount": 1 },
+            { "name": "General Veers", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Bistan", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Rey", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "B-28 Extinction-class Bomber", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Rebel Y-wing", "amount": 1 }
+        ]
+
+    },
+    {
+        "name":"Kessel",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Darth Malak", "amount": 2 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "Sith Empire Trooper", "amount": 1 },
+            { "name": "Admiral Ackbar", "amount": 1 },
+            { "name": "Dark Trooper", "amount": 1 },
+            { "name": "TIE Silencer", "amount": 1 },
+            { "name": "Kylo Ren", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Leia Organa", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Doctor Aphra", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Leviathan", "amount": 1 },
+            { "name": "Captain Drogan", "amount": 1 },
+            { "name": "Cere Junda", "amount": 1 },
+            { "name": "Kelleran Beq", "amount": 1 },
+            { "name": "Princess Kneesaa", "amount": 1 },
+            { "name": "Comeuppance", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Doctor Aphra", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Taron Malicos", "amount": 1 },
+            { "name": "Tarfful", "amount": 1 },
+            { "name": "Fury-class Interceptor", "amount": 1 },
+            { "name": "Comeuppance", "amount": 2 },
+            { "name": "TIE Dagger", "amount": 1 },
+            { "name": "Admiral Trench", "amount": 1 },
+            { "name": "Captain Drogan", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Leia Organa", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Admiral Trench", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Darth Bane", "amount": 1 },
+            { "name": "Tusken Warrior", "amount": 1 },
+            { "name": "Mark VI Interceptor", "amount": 1 },
+            { "name": "Tusken Chieftain", "amount": 1 },
+            { "name": "Kelleran Beq", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Captain Rex", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Leia Organa", "amount": 1 },
+            { "name": "Doctor Aphra", "amount": 1 },
+            { "name": "Leviathan", "amount": 2 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "TIE/IN Interceptor Prototype", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Captain Rex", "amount": 1 },
+            { "name": "Princess Kneesaa", "amount": 1 },
+            { "name": "Tarfful", "amount": 1 },
+            { "name": "Fury-class Interceptor", "amount": 1 },
+            { "name": "Merrin", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Doctor Aphra", "amount": 1 },
+            { "name": "Leviathan", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Fury-class Interceptor", "amount": 1 },
+            { "name": "Merrin", "amount": 1 },
+            { "name": "Cere Junda", "amount": 1 },
+            { "name": "Tusken Warrior", "amount": 1 },
+            { "name": "Taron Malicos", "amount": 1 },
+            { "name": "STAP", "amount": 1 },
+            { "name": "Mark VI Interceptor", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Mandalore",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Leia Organa", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Darth Bane", "amount": 1 },
+            { "name": "Taron Malicos", "amount": 1 },
+            { "name": "Admiral Trench", "amount": 1 },
+            { "name": "Coruscant Underworld Police", "amount": 1 },
+            { "name": "TIE Dagger", "amount": 2 },
+            { "name": "STAP", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Cere Junda", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Wedge Antilles's X-wing", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Zaalbar", "amount": 1 },
+            { "name": "Boushh (Leia Organa)", "amount": 1 },
+            { "name": "Eeth Koth", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Rey", "amount": 2 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 3 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 },
+            { "name": "Lobot", "amount": 1 },
+            { "name": "CT-7567 \"Rex\"", "amount": 1 },
+            { "name": "Eeth Koth", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Clone Sergeant's ARC-170", "amount": 1 },
+            { "name": "The Armorer", "amount": 1 },
+            { "name": "Wedge Antilles's X-wing", "amount": 1 },
+            { "name": "T3-M4", "amount": 1 },
+            { "name": "Tech", "amount": 1 },
+            { "name": "Echo", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "General Skywalker", "amount": 2 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Barriss Offee", "amount": 1 },
+            { "name": "Negotiator", "amount": 1 },
+            { "name": "Amilyn Holdo", "amount": 1 },
+            { "name": "Mon Mothma", "amount": 1 },
+            { "name": "Chopper", "amount": 1 },
+            { "name": "Resistance Trooper", "amount": 1 },
+            { "name": "Baze Malbus", "amount": 1 },
+            { "name": "Clone Wars Chewbacca", "amount": 1 },
+            { "name": "C-3PO", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Veteran Smuggler Chewbacca", "amount": 1 },
+            { "name": "Baze Malbus", "amount": 1},
+            { "name": "Hoth Rebel Soldier", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "R2-D2", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Bodhi Rook", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Ring of Kafrene",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Jedi Knight Luke Skywalker", "amount": 2 },
+            { "name": "General Skywalker", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Omega", "amount": 1 },
+            { "name": "Lando Calrissian", "amount": 1 },
+            { "name": "Umbaran Starfighter", "amount": 1 },
+            { "name": "Ima-Gun Di", "amount": 1 },
+            { "name": "Tech", "amount": 1 },
+            { "name": "Rose Tico", "amount": 1 },
+            { "name": "Chirrut Îmwe", "amount": 1 },
+            { "name": "Ghost", "amount": 1 },
+            { "name": "Commander Luke Skywalker", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Executor", "amount": 2 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Boba Fett", "amount": 1 },
+            { "name": "Sith Empire Trooper", "amount": 1 },
+            { "name": "First Order SF TIE Pilot", "amount": 1 },
+            { "name": "Vulture Droid", "amount": 1 },
+            { "name": "Sith Assassin", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "Nightsister Zombie", "amount": 1 },
+            { "name": "First Order SF TIE Pilot", "amount": 1 },
+            { "name": "Kylo Ren", "amount": 1 },
+            { "name": "Talia", "amount": 1 },
+            { "name": "Tusken Shaman", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Scythe", "amount": 2 },
+            { "name": "Darth Malak", "amount": 2 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "First Order TIE Pilot", "amount": 1 },
+            { "name": "Gauntlet Starfighter", "amount": 1 },
+            { "name": "Jango Fett", "amount": 1 },
+            { "name": "Wampa", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Maul", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Snowtrooper", "amount": 1 },
+            { "name": "Executrix", "amount": 1 },
+            { "name": "Geonosian Soldier", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Count Dooku", "amount": 1 },
+            { "name": "Geonosian Soldier's Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Magmatrooper", "amount": 1 },
+            { "name": "Colonel Starck", "amount": 1 },
+            { "name": "Kylo Ren (Unmasked)", "amount": 1 },
+            { "name": "Sith Empire Trooper", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "IG-2000", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Malachor",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Starkiller", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 2 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Maul", "amount": 2 },
+            { "name": "B-28 Extinction-class Bomber", "amount": 1 },
+            { "name": "Iden Versio", "amount": 1 },
+            { "name": "Moff Gideon", "amount": 1 },
+            { "name": "First Order TIE Fighter", "amount": 1 },
+            { "name": "First Order Officer", "amount": 1 },
+            { "name": "IG-88", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Ahsoka Tano (Fulcrum)", "amount": 1 },
+            { "name": "Gauntlet Starfighter", "amount": 1 },
+            { "name": "Imperial TIE Bomber", "amount": 1 },
+            { "name": "Resistance Hero Finn", "amount": 1 },
+            { "name": "Hound's Tooth", "amount": 1 },
+            { "name": "Wicket", "amount": 1 }, 
+            { "name": "Wedge Antilles's X-wing", "amount": 1 },
+            { "name": "Jedi Consular's Starfighter", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Profundity", "amount": 2 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "50R-T", "amount": 1 },
+            { "name": "Jolee Bindo", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Darth Malak", "amount": 2 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Hunter", "amount": 1 },
+            { "name": "Darth Sidious", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 2 },
+            { "name": "IG-100 MagnaGuard", "amount": 1 },
+            { "name": "Old Daka", "amount": 1 },
+            { "name": "Bodhi Rook", "amount": 1 },
+            { "name": "Bistan", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Barriss Offee", "amount": 1 },
+            { "name": "Tusken Shaman", "amount": 1 },
+            { "name": "Kylo Ren", "amount": 1 },
+            { "name": "Starkiller", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Profundity", "amount": 1 },
+            { "name": "Grand Inquisitor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Darth Malak", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Jedi Knight Luke Skywalker", "amount": 1 },
+            { "name": "Mace Windu", "amount": 1 },
+            { "name": "Anakin's Eta-2 Starfighter", "amount": 1 },
+            { "name": "Jedi Consular's Starfighter", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Jedi Master Kenobi", "amount": 3 },
+            { "name": "Grand Inquisitor", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "General Skywalker", "amount": 3 },
+            { "name": "Starkiller", "amount": 1 },
+            { "name": "Talia", "amount": 1 },
+            { "name": "First Order Executioner", "amount": 1 },
+            { "name": "Emperor Palpatine", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Vandor",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Grand Inquisitor", "amount": 3 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Echo", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Old Daka", "amount": 1 },
+            { "name": "TIE Echelon", "amount": 1 },
+            { "name": "Nightsister Initiate", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 3 },
+            { "name": "Biggs Darklighter's X-wing", "amount": 1 },
+            { "name": "Poe Dameron", "amount": 1 },
+            { "name": "Coruscant Underworld Police", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Dash Rendar", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Rey", "amount": 2 },
+            { "name": "Dash Rendar", "amount": 1 },
+            { "name": "The Mandalorian", "amount": 1 },
+            { "name": "Rey (Scavenger)", "amount": 1 },
+            { "name": "Kanan Jarrus", "amount": 1 },
+            { "name": "Lobot", "amount": 1 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "Ima-Gun Di", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Dash Rendar", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Chewbacca", "amount": 1 },
+            { "name": "Grand Master Yoda", "amount": 1 },
+            { "name": "Raven's Claw", "amount": 1 },
+            { "name": "Padmé Amidala", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Ki-Adi-Mundi", "amount": 2 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "L3-37", "amount": 1 },
+            { "name": "Xanadu Blood", "amount": 1 },
+            { "name": "Rey (Scavenger)", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Mara Jade, The Emperor's Hand", "amount": 1 },
+            { "name": "Dash Rendar", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 2 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Han Solo", "amount": 2 },
+            { "name": "Logray", "amount": 1 },
+            { "name": "Tech", "amount": 1 },
+            { "name": "Zaalbar", "amount": 1 },
+            { "name": "Resistance X-wing", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Skiff Guard (Lando Calrissian)", "amount": 1 },
+            { "name": "Ima-Gun Di", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Scarif",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Ben Solo", "amount": 2 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 },
+            { "name": "Bastila Shan", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Dash Rendar", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "Han's Millennium Falcon", "amount": 1 },
+            { "name": "Jedi Knight Revan", "amount": 1 },
+            { "name": "BB-8", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Skiff Guard (Lando Calrissian)", "amount": 1 }
+        ]
+
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Maul", "amount": 2 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Executrix", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "Savage Opress", "amount": 1 },
+            { "name": "Nightsister Acolyte", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Ninth Sister", "amount": 1 },
+            { "name": "Ugnaught", "amount": 1 },
+            { "name": "Imperial Super Commando", "amount": 1 },
+            { "name": "Geonosian Spy's Starfighter", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Executor", "amount": 2 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Nightsister Spirit", "amount": 1 },
+            { "name": "Imperial Super Commando", "amount": 1 },
+            { "name": "Ugnaught", "amount": 1 },
+            { "name": "B1 Battle Droid", "amount": 1 },
+            { "name": "Malevolence", "amount": 1 },
+            { "name": "Royal Guard", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 },
+            { "name": "Krrsantan", "amount": 1 },
+            { "name": "Count Dooku", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "IG-88", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "Darth Talon", "amount": 1 },
+            { "name": "Malevolence", "amount": 1 },
+            { "name": "Jawa Engineer", "amount": 1 },
+            { "name": "Mara Jade, The Emperor's Hand", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "URoRRuR'R'R", "amount": 1 },
+            { "name": "Hound's Tooth", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Maul", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "General Hux", "amount": 1 },
+            { "name": "Geonosian Brood Alpha", "amount": 1 },
+            { "name": "Count Dooku", "amount": 1 },
+            { "name": "Jawa", "amount": 1 },
+            { "name": "Shoretrooper", "amount": 1 },
+            { "name": "IG-100 MagnaGuard", "amount": 1 },
+            { "name": "Range Trooper", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 2 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Tusken Raider", "amount": 1 },
+            { "name": "Fifth Brother", "amount": 1 },
+            { "name": "Grand Moff Tarkin", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Geonosian Spy", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 },
+            { "name": "Geonosian Soldier", "amount": 1 },
+            { "name": "HK-47", "amount": 1 },
+            { "name": "Nightsister Acolyte", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Death Star",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Jawa Engineer", "amount": 1 },
+            { "name": "Geonosian Brood Alpha", "amount": 1 },
+            { "name": "Hyena Bomber", "amount": 1 },
+            { "name": "B2 Super Battle Droid", "amount": 1 },
+            { "name": "Zam Wesell", "amount": 1 },
+            { "name": "IG-86 Sentinel Droid", "amount": 1 },
+            { "name": "Hondo Ohnaka", "amount": 1 },
+            { "name": "Kylo Ren (Unmasked)", "amount": 1 },
+            { "name": "IG-88", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-1",
+        "units": [
+            { "name": "Rey", "amount": 2 },
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Sith Trooper", "amount": 1 },
+            { "name": "Old Daka", "amount": 1 },
+            { "name": "IG-100 MagnaGuard", "amount": 1 },
+            { "name": "Ninth Sister", "amount": 1 },
+            { "name": "Maul", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-2",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Rey", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Imperial Probe Droid", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "Sith Empire Trooper", "amount": 1 },
+            { "name": "Outrider", "amount": 1 },
+            { "name": "Maul", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-3",
+        "units": [
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Executor", "amount": 1 },
+            { "name": "Sith Eternal Emperor", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Rebel Officer Leia Organa", "amount": 1 },
+            { "name": "Darth Traya", "amount": 1 },
+            { "name": "Clone Sergeant - Phase I", "amount": 1 },
+            { "name": "Young Lando Calrissian", "amount": 1 },
+            { "name": "Emperor's Shuttle", "amount": 1 },
+            { "name": "Dark Trooper", "amount": 1 },
+            { "name": "Veteran Smuggler Chewbacca", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-4",
+        "units": [
+            { "name": "Darth Malgus", "amount": 2 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Lord Vader", "amount": 2 },
+            { "name": "Han Solo", "amount": 1 },
+            { "name": "General Kenobi", "amount": 1 },
+            { "name": "Wat Tambor", "amount": 1 },
+            { "name": "First Order Officer", "amount": 1 },
+            { "name": "HK-47", "amount": 1 },
+            { "name": "Jedi Consular", "amount": 1 },
+            { "name": "B1 Battle Droid", "amount": 1 },
+            { "name": "TIE Echelon", "amount": 1 },
+            { "name": "Asajj Ventress", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-5",
+        "units": [
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Rey", "amount": 2 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Supreme Leader Kylo Ren", "amount": 1 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Boba Fett, Scion of Jango", "amount": 1 },
+            { "name": "Maul", "amount": 1 },
+            { "name": "Hermit Yoda", "amount": 1 },
+            { "name": "Han Solo", "amount": 2 },
+            { "name": "Sana Starros", "amount": 1 },
+            { "name": "Nute Gunray", "amount": 1 },
+            { "name": "Hoth Rebel Scout", "amount": 1 },
+            { "name": "Razor Crest", "amount": 1 }
+        ]
+
+    },
+    {
+        "name": "Hoth",
+        "id": "tb3-platoon-6",
+        "units": [
+            { "name": "Darth Malgus", "amount": 1 },
+            { "name": "Scythe", "amount": 1 },
+            { "name": "Commander Ahsoka Tano", "amount": 1 },
+            { "name": "Jedi Master Luke Skywalker", "amount": 1 },
+            { "name": "Lord Vader", "amount": 1 },
+            { "name": "Jedi Master Kenobi", "amount": 1 },
+            { "name": "Razor Crest", "amount": 2 },
+            { "name": "Ben Solo", "amount": 1 },
+            { "name": "Aurra Sing", "amount": 1 },
+            { "name": "Resistance Pilot", "amount": 1 },
+            { "name": "Admiral Raddus", "amount": 1 },
+            { "name": "Dengar", "amount": 1 },
+            { "name": "Chief Nebit", "amount": 1 },
+            { "name": "Nightsister Initiate", "amount": 1 }
+        ]
+
+    }
+    
+]
