@@ -342,202 +342,44 @@ function attachOpUnitsToPlanets(planets, opData) {
 // Op Analysis
 
 
+// --- HELPER FUNKTIONEN FÜR UNITS ---
+
 function isShipMember(member) {
-  // robust genug für swgoh-data: ships haben i.d.R. "ship" im prefab 
-  return member.categoryId.includes("territory_ship_platoon") || member.categoryId.includes("shipclass_capitalship") || member.unitPrefab.includes('ship')
+  // Wenn categoryId existiert, nutzen wir das
+  if (member.categoryId) {
+      if (member.categoryId.includes("territory_ship_platoon")) return true;
+      if (member.categoryId.includes("shipclass_capitalship")) return true;
+  }
+  // Fallback auf Prefab, falls vorhanden
+  if (member.unitPrefab && member.unitPrefab.includes('ship')) return true;
+  
+  // Letzter Fallback: Manche Datenquellen haben isShip boolean
+  return member.isShip === true;
 }
+
 function effectiveRelicTier(member) {
-  // chars: relic.currentTier - 2
-  const r = member?.relic?.currentTier
-  if (typeof r !== 'number') return 0
-  return r - 2
+  // chars: relic.currentTier - 2 (z.B. Tier 7 = Relic 5)
+  // Wenn member.relic undefined ist, ist es Tier 0
+  const r = member?.relic?.currentTier;
+  if (typeof r !== 'number') return 0;
+  return Math.max(0, r - 2); // Sicherstellen, dass wir nicht negativ werden
 }
+
 function isEligible(member, minRelicTier) {
-  if (!member) return false
+  if (!member) return false;
+  
+  // Spezialfall Schiffe: Brauchen immer 7 Sterne, Relic egal
   if (isShipMember(member)) {
-    // ships müssen Tier 7 sein
-    return member.currentRarity === 7
+    return member.currentRarity === 7;
   }
-  // chars: minRelicTier <= relic.currentTier - 2
-  return effectiveRelicTier(member) >= minRelicTier
+  
+  // Chars: Müssen Mindest-Relic erfüllen
+  return effectiveRelicTier(member) >= minRelicTier;
 }
-function analyzeMPlatoon(platoon, rosterPool) {
-  const minRelicTier = platoon.minRelicTier ?? 0
-  const missingUnits = []
-  let isBlocked = false
-  let usedUnits = []
 
-  for (const req of platoon.units || []) {
-    const pool = rosterPool.get(req.name) || []
-
-    // geeignete Members filtern
-    const eligible = pool.filter(m => isEligible(m, minRelicTier))
-
-    if (eligible.length === 0) {
-      isBlocked = true
-      missingUnits.push({
-        name: req.name,
-        required: req.amount,
-        available: 0,
-        missing: req.amount,
-        minRelicTier
-      })
-      continue
-    }
-
-    const usedCount = Math.min(eligible.length, req.amount)
-
-    // ❗️ HIER PASSIERT DER VERBRAUCH
-    const consumed = eligible.slice(0, usedCount)
-
-    // aus Pool entfernen
-    rosterPool.set(
-      req.name,
-      pool.filter(m => !consumed.includes(m))
-    )
-
-    usedUnits.push(...consumed)
-
-    if (usedCount < req.amount) {
-      missingUnits.push({
-        name: req.name,
-        required: req.amount,
-        available: usedCount,
-        missing: req.amount - usedCount,
-        minRelicTier
-      })
-    }
-  }
-
-  let status = "COMPLETE"
-  if (missingUnits.length > 0) status = "PARTIAL"
-  if (isBlocked) status = "BLOCKED"
-
-  return {
-    id: platoon.id,
-    minRelicTier,
-    status,
-    missingUnits,
-    usedUnits: usedUnits.length
-  }
-}
-function analyzeMPlanetOps(planet, baseRosterPool) {
-  const rosterPool = cloneRosterPool(baseRosterPool)
-
-  const platoonAnalyses = []
-  let complete = 0, partial = 0, blocked = 0
-
-  for (const rz of planet.reconZones || []) {
-    const minRelicTier = rz.minRelicTier ?? 0
-
-    for (const p of rz.platoonDefinition || []) {
-      const platoon = { ...p, minRelicTier }
-      const result = analyzeMPlatoon(platoon, rosterPool)
-      platoonAnalyses.push(result)
-
-      if (result.status === "COMPLETE") complete++
-      if (result.status === "PARTIAL") partial++
-      if (result.status === "BLOCKED") blocked++
-    }
-  }
-
-  return {
-    planet: planet.name,
-    phase: planet.phase,
-    summary: { complete, partial, blocked },
-    platoons: platoonAnalyses
-  }
-}
-function analyzeCombinedOps(selectedPlanets, baseRosterPool) {
-  const rosterPool = cloneRosterPool(baseRosterPool)
-  const missing = []
-  let blocked = false
-
-  for (const planet of selectedPlanets) {
-    for (const rz of planet.reconZones || []) {
-      const minRelicTier = rz.minRelicTier ?? 0
-
-      for (const p of rz.platoonDefinition || []) {
-        const result = analyzeMPlatoon(
-          { ...p, minRelicTier },
-          rosterPool
-        )
-
-        if (result.status !== "COMPLETE") {
-          blocked ||= result.status === "BLOCKED"
-          missing.push(...result.missingUnits)
-        }
-      }
-    }
-  }
-  const mergedMissing = mergeMissingUnits(missing)
-
-  mergedMissing.sort((a, b) => {
-  if (a.status !== b.status) {
-    return a.status === "BLOCKED" ? -1 : 1
-  }
-  if (a.minRelicTier !== b.minRelicTier) {
-    return b.minRelicTier - a.minRelicTier
-  }
-  return b.missing - a.missing
-})
-
-
-  const status =
-    missing.length === 0
-      ? "COMPLETE"
-      : blocked
-        ? "BLOCKED"
-        : "PARTIAL"
-
-  return { status, mergedMissing }
-}
-function mergeMissingUnits(missingUnits) {
-  const map = new Map()
-
-  for (const u of missingUnits) {
-    const key = `${u.name}__${u.minRelicTier}`
-
-    if (!map.has(key)) {
-      map.set(key, {
-        name: u.name,
-        minRelicTier: u.minRelicTier,
-        required: 0,
-        available: 0,
-        missing: 0
-      })
-    }
-
-    const entry = map.get(key)
-    entry.required += u.required
-    entry.available += u.available
-    entry.missing += u.missing
-  }
-
-  return [...map.values()].map(e => ({
-    ...e,
-    status:
-      e.available === 0
-        ? "BLOCKED"
-        : e.available < e.required
-          ? "PARTIAL"
-          : "COMPLETE"
-  }))
-}
-function analyzeOpsForSelectedPlanets(planets, unitsArray) {
-  const baseRosterPool = buildRosterPool(unitsArray)
-
-  const perPlanet = {}
-  for (const p of planets) {
-    perPlanet[p.name] = analyzeMPlanetOps(p, baseRosterPool)
-  }
-
-  const combined = analyzeCombinedOps(planets, baseRosterPool)
-
-  return {
-    perPlanet,
-    combined
-  }
+// GP Helper (bleibt wie er ist)
+function getGP(member) {
+    return parseInt(member.galacticPower || member.gp || member.power || 0);
 }
 
 
@@ -667,59 +509,6 @@ function distributeRemainingGP(strategy) {
         strategy.leftoverGP = 0; 
     }
 }
-/**
- * Versucht, die Anforderungen eines Platoons zu erfüllen.
- * Entfernt genutzte Einheiten aus dem rosterPool und gibt sie zurück.
- */
-function consumeUnitsForPlatoon(platoon, minRelicTier, rosterPool) {
-    const usedUnitsInThisPlatoon = [];
-
-    // Durchlaufe alle Anforderungen im Platoon (z.B. 2x Jedi Knight Luke, 1x C-3PO)
-    for (const req of platoon.units || []) {
-        // Hole alle verfügbaren Einheiten dieses Typs aus dem Pool
-        const availableUnits = rosterPool.get(req.name) || [];
-
-        // 1. Filter: Wer erfüllt die Bedingungen (Sterne/Relic)?
-        // (Nutzt deine isEligible Funktion von vorhin)
-        const eligibleCandidates = availableUnits.filter(u => isEligible(u, minRelicTier));
-
-        // 2. Sortierung: "Billigste" Einheiten zuerst!
-        // Wir wollen für OPs so wenig GP wie möglich verschwenden.
-        eligibleCandidates.sort((a, b) => getUnitGP(a) - getUnitGP(b));
-
-        // 3. Menge bestimmen
-        const amountNeeded = req.amount;
-        const amountToTake = Math.min(eligibleCandidates.length, amountNeeded);
-
-        if (amountToTake > 0) {
-            // Einheiten auswählen
-            const unitsToConsume = eligibleCandidates.slice(0, amountToTake);
-            
-            // Zur Liste der verbrauchten hinzufügen
-            usedUnitsInThisPlatoon.push(...unitsToConsume);
-
-            // 4. WICHTIG: Aus dem globalen Pool für diese Phase entfernen
-            // Wir aktualisieren den Eintrag in der Map
-            const remainingUnits = availableUnits.filter(u => !unitsToConsume.includes(u));
-            rosterPool.set(req.name, remainingUnits);
-        }
-    }
-
-    return usedUnitsInThisPlatoon;
-}
-/**
- * Prüft, ob ein Platoon vollständig gefüllt wurde.
- * Wird benötigt, um zu entscheiden, ob es Punkte (TP) gibt.
- */
-function isPlatoonComplete(platoon, usedUnits) {
-    // Summe der benötigten Einheiten laut Platoon-Definition
-    const totalRequired = platoon.units.reduce((sum, unitReq) => sum + unitReq.amount, 0);
-    
-    // Summe der tatsächlich zugewiesenen Einheiten
-    const totalFilled = usedUnits.length;
-
-    return totalFilled >= totalRequired;
-}
 function cloneRosterPool(pool) {
   if (!pool) {
       console.error("Fehler: cloneRosterPool wurde mit 'undefined' aufgerufen.");
@@ -736,98 +525,36 @@ function cloneRosterPool(pool) {
   return clone;
 }
 function buildRosterPool(unitsArray) {
-  const map = new Map()
+    const map = new Map();
 
-  for (const u of unitsArray || []) {
-    map.set(u.name, [...(u.members || [])])
-  }
+    for (const u of unitsArray || []) {
+        // Name als Key
+        const key = u.name;
+        if (!key) continue;
 
-  return map
-}
-// Hilfsfunktion: GP einer Unit holen (passe das Feld an deine Daten an)
-function getUnitGP(member) {
-    return member.galacticPower || member.gp || 0; 
-}
-// Deine Funktion erweitert um GP-Berechnung und Score
-function processPlatoonAndCalculateCost(platoon, rosterPool) {
-    const minRelicTier = platoon.minRelicTier ?? 0;
-    let usedGP = 0;
-    let filledUnitsCount = 0;
-    const totalRequired = platoon.units.reduce((sum, u) => sum + u.amount, 0);
-
-    // Wir klonen das Platoon-Objekt nicht, wir verändern den Pool direkt (Call by Reference ist hier gewollt für die Simulation)
-    
-    for (const req of platoon.units || []) {
-        const pool = rosterPool.get(req.name) || [];
+        // Existierende holen
+        const existing = map.get(key) || [];
         
-        // Filter: Geeignet UND noch nicht verbraucht (Implizit, da wir sie aus dem Pool entfernen)
-        const eligible = pool.filter(m => isEligible(m, minRelicTier));
+        // Neue Members holen
+        const newMembers = u.members || [];
+
+        // Zusammenfügen (Concat)
+        // Optional: Wir könnten hier Duplikate filtern, falls dieselbe Unit-ID doppelt kommt.
+        // Das ist performance-intensiv, aber sicher. 
+        // Wir vertrauen erstmal darauf, dass concat reicht, solange wir nicht überschreiben.
+        map.set(key, existing.concat(newMembers));
         
-        // Gieriger Ansatz: Nimm die "billigsten" Units, die die Anforderung erfüllen, 
-        // um hohe GP für Deployment zu sparen? 
-        // ODER nimm einfach die ersten. Für Simulation sortieren wir nach GP aufsteigend.
-        eligible.sort((a, b) => getUnitGP(a) - getUnitGP(b));
-
-        const need = req.amount;
-        const take = Math.min(eligible.length, need);
-        
-        if (take > 0) {
-            const consumed = eligible.slice(0, take);
-            filledUnitsCount += take;
-
-            // GP addieren und Units aus Pool entfernen
-            consumed.forEach(u => usedGP += getUnitGP(u));
-
-            // Pool update
-            rosterPool.set(req.name, pool.filter(m => !consumed.includes(m)));
+        // ID als Key (falls vorhanden und anders)
+        // Achtung: Wir verweisen auf DASSELBE Array-Objekt im Speicher? 
+        // Nein, concat erzeugt neue Arrays. Das ist gut.
+        const id = u.baseId || u.id;
+        if (id && id !== key) {
+             const existingId = map.get(id) || [];
+             map.set(id, existingId.concat(newMembers));
         }
     }
-
-    // Status prüfen
-    const isComplete = filledUnitsCount === totalRequired;
-    
-    // Punkte berechnen (TP) - Annahme: Platoon hat 'reward.value'
-    let gainedTP = 0;
-    if (isComplete && platoon.reward && platoon.reward.value) {
-        gainedTP = parseInt(platoon.reward.value, 10);
-    }
-
-    return {
-        id: platoon.id,
-        usedGP: usedGP,
-        gainedTP: gainedTP,
-        isComplete: isComplete
-    };
+    return map;
 }
-/**
- * Führt alle Ops für einen Planeten aus und gibt Kosten/Nutzen zurück.
- */
-function processPlanetOperations(planet, rosterPool) {
-    let totalUsedGP = 0;
-    let totalGainedTP = 0;
-    
-    // Durch alle ReconZones (Ops) iterieren
-    for (const rz of planet.reconZones || []) {
-        const minRelicTier = rz.minRelicTier ?? 0;
-        
-        for (const p of rz.platoonDefinition || []) {
-            const platoon = { ...p, minRelicTier };
-            
-            // Hier verändern wir den rosterPool direkt!
-            const result = processPlatoonAndCalculateCost(platoon, rosterPool);
-            
-            totalUsedGP += result.usedGP;
-            totalGainedTP += result.gainedTP;
-        }
-    }
-
-    return {
-        planetId: planet.id,
-        usedGP: totalUsedGP,
-        gainedTP: totalGainedTP
-    };
-}
-
 // Hilfsfunktion für Kombinationen (wenn man wählen muss)
 function getKCombinations(set, k) {
     if (k > set.length || k <= 0) return [];
@@ -844,19 +571,6 @@ function getKCombinations(set, k) {
         }
     }
     return combs;
-}
-/**
- * Berechnet die Summe der Galaktischen Macht (GP) aus einer Liste von Einheiten.
- * Wird genutzt, um zu sehen, wie viel GP in Operations "verschwunden" ist.
- */
-function calculateUsedGP(unitsList) {
-    if (!unitsList || unitsList.length === 0) return 0;
-
-    return unitsList.reduce((sum, unit) => {
-        // Fallback für verschiedene Datenstrukturen (swgoh.gg nutzt oft 'galacticPower' oder 'gp')
-        const gpValue = unit.galacticPower || unit.gp || 0;
-        return sum + gpValue;
-    }, 0);
 }
 /**
  * START-FUNKTION
@@ -1125,53 +839,73 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
     return globalBestPath || { totalStars: currentState.totalStarsAccumulated, path: currentState.pathHistory };
 }
 
-/**
- * Führt Operations durch und liefert Details pro Platoon zurück.
- */
+
 function processPlanetOperationsDetailed(planet, rosterPool) {
     let totalUsedGP = 0;
     let totalGainedTP = 0;
-    let allMissingUnits = [];
-    
-    // NEU: Liste für den detaillierten Status jedes Platoons
-    const platoonDetails = []; 
+    const allMissingUnits = []; 
+    const platoonResultsMap = new Map(); 
 
+    // --- VORBEREITUNG ---
+    let allPlatoons = [];
     for (const rz of planet.reconZones || []) {
         const minRelicTier = rz.minRelicTier ?? 0;
-        
         for (const p of rz.platoonDefinition || []) {
-            
-            // 1. Einheiten verbrauchen
-            const usedUnits = consumeUnitsForPlatoon(p, minRelicTier, rosterPool); 
-            
-            // 2. GP Kosten addieren
-            if (usedUnits.length > 0) {
-                totalUsedGP += calculateUsedGP(usedUnits);
-            }
-
-            // 3. Status prüfen
-            const isComplete = isPlatoonComplete(p, usedUnits);
-            const pointsValue = parseInt(p.reward?.value || 0);
-            
-            if (isComplete) {
-                 totalGainedTP += pointsValue;
-            } else {
-                // Fehlende Einheiten global sammeln
-                const missing = getMissingUnitsForPlatoon(p, usedUnits, minRelicTier);
-                allMissingUnits.push(...missing);
-            }
-
-            // 4. NEU: Detail-Eintrag für dieses Platoon erstellen
-            platoonDetails.push({
-                id: p.id,
-                // Name oft als nameKey in den Daten, sonst ID
-                name: p.nameKey || p.id, 
-                zoneName: rz.nameKey || "Unknown Zone", // Damit man weiß, welche Zone (Links/Rechts/Mitte)
-                status: isComplete ? "FILLED" : "INCOMPLETE",
-                pointsGained: isComplete ? pointsValue : 0,
-                // Optional: Falls du im Log sehen willst, was GENAU hier fehlte:
-                missing: isComplete ? [] : getMissingUnitsForPlatoon(p, usedUnits, minRelicTier)
+            allPlatoons.push({
+                platoon: p,
+                zoneName: rz.nameKey || "Zone",
+                minRelic: minRelicTier,
+                originalId: p.id,
+                reward: parseInt(p.reward?.value || 0)
             });
+        }
+    }
+
+    // --- PHASE 1: COMPLETIONIST (Erst prüfen, ob wir das Platoon voll kriegen) ---
+    // Sortierung: Teuerste zuerst
+    allPlatoons.sort((a, b) => b.reward - a.reward);
+
+    allPlatoons.forEach(item => {
+        // Wir nutzen jetzt isEligible im Check
+        if (canAffordPlatoon(item.platoon, item.minRelic, rosterPool)) {
+            // Erfolg -> Ausführen
+            const result = fillPlatoon(item.platoon, item.minRelic, rosterPool);
+            platoonResultsMap.set(item.originalId, { ...result, zoneName: item.zoneName });
+            totalUsedGP += result.usedGP;
+            totalGainedTP += result.pointsGained;
+            item._processed = true;
+        } 
+    });
+
+    // --- PHASE 2: DUMPING (Rest auffüllen) ---
+    allPlatoons.forEach(item => {
+        if (!item._processed) {
+            const result = fillPlatoon(item.platoon, item.minRelic, rosterPool);
+            platoonResultsMap.set(item.originalId, { ...result, zoneName: item.zoneName });
+            totalUsedGP += result.usedGP;
+            totalGainedTP += result.pointsGained;
+            if (result.missingDetails && result.missingDetails.length > 0) {
+                 allMissingUnits.push(...result.missingDetails);
+            }
+        }
+    });
+
+    // --- ZUSAMMENBAU ---
+    const finalPlatoonDetails = [];
+    for (const rz of planet.reconZones || []) {
+        for (const p of rz.platoonDefinition || []) {
+            const res = platoonResultsMap.get(p.id);
+            if (res) {
+                finalPlatoonDetails.push({
+                    id: p.id,
+                    name: p.nameKey || p.id,
+                    zoneName: res.zoneName,
+                    status: res.status,
+                    pointsGained: res.pointsGained,
+                    missing: res.missingNames,
+                    units: p.units
+                });
+            }
         }
     }
 
@@ -1180,8 +914,98 @@ function processPlanetOperationsDetailed(planet, rosterPool) {
         usedGP: totalUsedGP, 
         gainedTP: totalGainedTP, 
         missingUnits: allMissingUnits,
-        platoonDetails: platoonDetails // <--- Geben wir zurück an die Simulation
+        platoonDetails: finalPlatoonDetails 
     };
+}
+// --- 3. CHECK FUNKTION (Gibt jetzt Grund zurück) ---
+function canAffordPlatoon(platoon, minRelic, rosterPool) {
+    const tempUsage = new Map();
+
+    for (const req of platoon.units || []) {
+        // Exakter Lookup
+        let pool = rosterPool.get(req.name);
+        if (!pool && req.id) pool = rosterPool.get(req.id);
+
+        if (!pool) return false;
+
+        // --- HIER IST DIE ÄNDERUNG: isEligible nutzen ---
+        const validUnits = pool.filter(u => isEligible(u, minRelic));
+        
+        const amountNeeded = parseInt(req.amount || 1);
+        const usageKey = req.name; 
+        const alreadyUsed = tempUsage.get(usageKey) || 0;
+        
+        if (validUnits.length - alreadyUsed < amountNeeded) {
+            return false; 
+        }
+        
+        tempUsage.set(usageKey, alreadyUsed + amountNeeded);
+    }
+    return true;
+}
+
+function fillPlatoon(platoon, minRelic, rosterPool) {
+    let usedGP = 0;
+    let filledCount = 0;
+    let currentPoints = 0;
+    const missingNames = [];
+    const missingDetails = [];
+
+    const fullReward = parseInt(platoon.reward?.value || 0);
+    const totalSlots = platoon.units.reduce((sum, u) => sum + parseInt(u.amount || 1), 0);
+    const pointsPerUnit = totalSlots > 0 ? (fullReward / totalSlots) : 0;
+
+    for (const req of platoon.units || []) {
+        let searchKey = req.name;
+        let pool = rosterPool.get(searchKey);
+        if (!pool && req.id) { pool = rosterPool.get(req.id); searchKey = req.id; }
+
+        const needed = parseInt(req.amount || 1);
+
+        if (!pool) {
+            missingNames.push(req.name);
+            missingDetails.push({ name: req.name, relic: minRelic, count: needed, platoonPoints: fullReward });
+            continue;
+        }
+
+        // --- HIER IST DIE ÄNDERUNG: isEligible nutzen ---
+        const eligible = pool.filter(u => isEligible(u, minRelic));
+        
+        // Sortieren nach GP (billigste zuerst verbrauchen)
+        eligible.sort((a, b) => getGP(a) - getGP(b));
+
+        const take = Math.min(needed, eligible.length);
+
+        if (take > 0) {
+            const consumed = eligible.slice(0, take);
+            consumed.forEach(u => usedGP += getGP(u));
+            
+            // Pool Update
+            const newPool = pool.filter(u => !consumed.includes(u));
+            rosterPool.set(searchKey, newPool);
+
+            filledCount += take;
+            currentPoints += (take * pointsPerUnit);
+        }
+
+        if (take < needed) {
+            missingNames.push(req.name);
+            missingDetails.push({
+                name: req.name,
+                relic: minRelic,
+                count: needed - take,
+                platoonPoints: fullReward
+            });
+        }
+    }
+
+    let status = 'MISSING';
+    if (filledCount >= totalSlots && totalSlots > 0) status = 'FILLED';
+    else if (filledCount > 0) status = 'PARTIAL';
+
+    const finalPoints = (status === 'FILLED') ? fullReward : Math.floor(currentPoints);
+
+    return { usedGP, pointsGained: finalPoints, status, missingNames, missingDetails };
 }
 /**
  * Berechnet die erwarteten Punkte aus Kampfmissionen (Strike Zones).
@@ -1209,39 +1033,6 @@ function calculateStrikeZonePoints(planet, successRate) {
     const totalPotential = maxPointsPerPlayer * GUILD_MEMBERS;
 
     return Math.floor(totalPotential * successRate);
-}
-
-/**
- * Vergleicht Platoon-Anforderungen mit verbrauchten Einheiten und gibt Fehlendes zurück.
- */
-function getMissingUnitsForPlatoon(platoon, usedUnits, minRelicTier) {
-    const missing = [];
-    
-    // Zählen, wie viel wir von wem verbraucht haben
-    const usedCountMap = new Map();
-    usedUnits.forEach(u => {
-        // Wir nutzen den Namen als Key (oder baseId, falls verfügbar)
-        const current = usedCountMap.get(u.name) || 0;
-        usedCountMap.set(u.name, current + 1);
-    });
-
-    platoon.units.forEach(req => {
-        const usedAmount = usedCountMap.get(req.name) || 0;
-        const missingAmount = req.amount - usedAmount;
-
-        if (missingAmount > 0) {
-            missing.push({
-                name: req.name,
-                relic: minRelicTier,
-                count: missingAmount,
-                // Speichern, wie viele Punkte das GANZE Platoon wert ist, 
-                // um die Wichtigkeit später zu schätzen
-                platoonPoints: parseInt(platoon.reward?.value || 0) 
-            });
-        }
-    });
-
-    return missing;
 }
 
 /**
