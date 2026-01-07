@@ -633,10 +633,11 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
         };
     }
 
-    // --- RESET FÜR DEN NEUEN TAG ---
+    // --- RESET ---
     const currentPhaseRoster = cloneRosterPool(baseRosterOriginal);
     let availableDeploymentGP = guildTotalGP; 
     
+    // Speicher für Ergebnisse
     const dailyOpsData = new Map(); 
     currentState.activePlanets.forEach(p => {
         dailyOpsData.set(p.id, { tp: 0, gpCost: 0, missingUnits: [], platoonDetails: [] });
@@ -646,16 +647,13 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
     const dailyGlobalUsedGUIDs = new Set();
 
     // =================================================================================
-    // DURCHLAUF 1: STRICT MODE (Nur volle Platoons füllen)
+    // DURCHLAUF 1: STRICT MODE (Priorisiert volle Platoons auf schweren Planeten)
     // =================================================================================
-    
-    // WICHTIG: Wir sortieren die Planeten temporär für diesen Schritt nach Priorität.
-    // Teure Planeten (hohe Thresholds) zuerst! Damit Felucia vor Geonosis isst.
     const sortedForStrict = [...currentState.activePlanets].sort((a, b) => {
-        // Wir nehmen den Wert für den 3. Stern als Indikator für "Schwierigkeit"
+        // Sortieren nach Schwierigkeit (3. Stern Threshold), damit wichtige OPs zuerst bedient werden
         const maxA = a.starThresholds[2] || 0;
         const maxB = b.starThresholds[2] || 0;
-        return maxB - maxA; // Absteigend
+        return maxB - maxA; 
     });
 
     sortedForStrict.forEach(planet => {
@@ -676,10 +674,8 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
     });
 
     // =================================================================================
-    // DURCHLAUF 2: DUMP MODE (Reste verteilen)
+    // DURCHLAUF 2: DUMP MODE (Reste verteilen & Anzeigen generieren)
     // =================================================================================
-    // Hier ist die Reihenfolge weniger wichtig, da Strict-Fills schon gesichert sind.
-    
     currentState.activePlanets.forEach(planet => {
         const opsData = dailyOpsData.get(planet.id);
 
@@ -688,20 +684,21 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
             currentPhaseRoster, 
             currentOpsProgress, 
             dailyGlobalUsedGUIDs,
-            'DUMP' 
+            'DUMP'
         );
         
         availableDeploymentGP -= resultDump.usedGP;
-        opsData.tp += resultDump.gainedTP; // Sollte jetzt dank Fix 0 sein, wenn schon voll
+        opsData.tp += resultDump.gainedTP; // Addiert evtl. Punkte (sollten aber 0 sein wenn schon voll)
         opsData.gpCost += resultDump.usedGP;
         
+        // Finalen Status speichern (wichtig für UI!)
         opsData.missingUnits = resultDump.missingUnits;
         opsData.platoonDetails = resultDump.platoonDetails;
 
         currentOpsProgress = resultDump.updatedProgress;
     });
 
-    // --- SCHRITT B: Deployment (unverändert) ---
+    // --- DEPLOYMENT ---
     const currentRate = ratesArray[currentState.day - 1] || 0;
 
     const deploymentPlanetsInput = currentState.activePlanets.map(p => {
@@ -725,7 +722,7 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
 
     const greedyStrategy = solveRotePhase(availableDeploymentGP, deploymentPlanetsInput);
 
-    // --- SCHRITT C: Strategie-Verzweigung (unverändert) ---
+    // --- STRATEGIE-VERZWEIGUNG (SANDBAGGING) ---
     let strategiesToTest = [greedyStrategy];
 
     greedyStrategy.plan.forEach((planItem, index) => {
@@ -737,8 +734,14 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
             const savedGP = sbItem.cost;
             sbItem.cost = 0;
             sbItem.extraDeployment += savedGP;
-            sbItem.isPreload = true;
 
+            // --- PRELOAD FIX: Rest-GP auch nutzen! ---
+            if (sandbagStrategy.leftoverGP > 0) {
+                sbItem.extraDeployment += sandbagStrategy.leftoverGP;
+                sandbagStrategy.leftoverGP = 0;
+            }
+
+            sbItem.isPreload = true;
             sandbagStrategy.totalStars -= 1;
             sandbagStrategy.isSandbaggingVariant = true; 
             sandbagStrategy.sandbaggedPlanet = sbItem.name;
@@ -747,7 +750,7 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
         }
     });
 
-    // --- SCHRITT D: Rekursion (unverändert) ---
+    // --- REKURSION ---
     let globalMaxStars = -1;
     let globalBestPath = null;
 
@@ -856,12 +859,14 @@ function processPlanetOperationsDetailed(planet, rosterPool, existingProgressMap
     const allMissingUnits = []; 
     const platoonResultsMap = new Map(); 
 
+    // Fortschritt laden
     const planetProgress = existingProgressMap ? (existingProgressMap.get(planet.id) || new Map()) : new Map();
     const newPlanetProgress = new Map();
     for(const [k,v] of planetProgress.entries()) {
         newPlanetProgress.set(k, new Map(v));
     }
 
+    // --- VORBEREITUNG ---
     let allPlatoons = [];
     for (const rz of planet.reconZones || []) {
         const minRelicTier = rz.minRelicTier ?? 0;
@@ -876,18 +881,21 @@ function processPlanetOperationsDetailed(planet, rosterPool, existingProgressMap
         }
     }
 
-    // Sortierung
+    // Sortierung: Teuerste zuerst
     allPlatoons.sort((a, b) => b.reward - a.reward);
 
+    // --- VERARBEITUNG ---
     allPlatoons.forEach(item => {
         const previousFill = newPlanetProgress.get(item.originalId) || new Map();
         let shouldProcess = false;
         
         if (mode === 'STRICT') {
+            // Nur wenn wir es komplett leisten können
             if (canAffordPlatoonRest(item.platoon, item.minRelic, rosterPool, previousFill, dailyGlobalUsedGUIDs)) {
                 shouldProcess = true;
             }
         } else if (mode === 'DUMP') {
+            // Immer verarbeiten (Reste füllen)
             shouldProcess = true;
         }
 
@@ -909,17 +917,15 @@ function processPlanetOperationsDetailed(planet, rosterPool, existingProgressMap
     const updatedGlobalProgress = existingProgressMap ? new Map(existingProgressMap) : new Map();
     updatedGlobalProgress.set(planet.id, newPlanetProgress);
 
-    // --- ZUSAMMENBAU (HIER IST DER FIX) ---
+    // --- ZUSAMMENBAU FÜR DIE ANZEIGE ---
     const finalPlatoonDetails = [];
     for (const rz of planet.reconZones || []) {
         for (const p of rz.platoonDefinition || []) {
             const res = platoonResultsMap.get(p.id);
             if (res) {
-                // FIX: Für die Anzeige (Tooltip) wollen wir immer die vollen Punkte sehen,
-                // wenn das Platoon voll ist. Egal, ob es im Strict-Mode oder Dump-Mode gefüllt wurde.
-                // res.pointsGained enthält nur die "Delta"-Punkte dieses Durchlaufs (was für die Mathe wichtig ist),
-                // aber für die UI verwirrend ist, wenn 0 zurückkommt.
-                
+                // --- FIX ANZEIGE: ---
+                // res.pointsGained enthält nur die Punkte aus DIESEM Durchlauf (im Dump-Mode oft 0, weil schon voll).
+                // Für die UI wollen wir aber immer die vollen Punkte sehen, wenn der Status 'FILLED' ist.
                 const fullReward = parseInt(p.reward?.value || 0);
                 const displayPoints = (res.status === 'FILLED') ? fullReward : 0;
 
@@ -928,7 +934,7 @@ function processPlanetOperationsDetailed(planet, rosterPool, existingProgressMap
                     name: p.nameKey || p.id,
                     zoneName: res.zoneName,
                     status: res.status,
-                    pointsGained: displayPoints, // <--- Zeigt jetzt immer die Belohnung an, wenn voll
+                    pointsGained: displayPoints, // <--- Hier erzwingen wir den richtigen Wert für den Tooltip
                     missing: res.missingNames,
                     units: p.units
                 });
@@ -960,11 +966,9 @@ function fillPlatoonRest(platoon, minRelic, rosterPool, previousFillMap, usedGUI
     const missingDetails = [];
 
     const fullReward = parseInt(platoon.reward?.value || 0);
-    
-    // Gesamtbedarf berechnen
     const totalSlots = platoon.units.reduce((sum, u) => sum + parseInt(u.amount || 1), 0);
     
-    // Check: War das Platoon VOR diesem Durchlauf schon voll?
+    // Check: War es vorher schon voll?
     let preFilledCount = 0;
     for(const count of previousFillMap.values()) preFilledCount += count;
     const wasFullAtStart = (preFilledCount >= totalSlots && totalSlots > 0);
@@ -981,71 +985,46 @@ function fillPlatoonRest(platoon, minRelic, rosterPool, previousFillMap, usedGUI
         if (!pool && req.id) { pool = rosterPool.get(req.id); searchKey = req.id; }
 
         if (!pool) {
-            // FIX ANZEIGE: Namen so oft pushen wie sie fehlen
+            // Namen mehrfach pushen für korrekte Anzeige (x/3)
             for(let i=0; i<neededNow; i++) missingNames.push(req.name);
-            
             missingDetails.push({ name: req.name, relic: minRelic, count: neededNow, platoonPoints: fullReward });
             continue;
         }
 
-        // Filter: Blacklist & Relic
-        const eligible = pool.filter(u => 
-            !usedGUIDs.has(u.uuid) && isEligible(u, minRelic)
-        );
+        const eligible = pool.filter(u => !usedGUIDs.has(u.uuid) && isEligible(u, minRelic));
         eligible.sort((a, b) => getGP(a) - getGP(b));
 
         const take = Math.min(neededNow, eligible.length);
 
         if (take > 0) {
             const consumed = eligible.slice(0, take);
-            
             consumed.forEach(u => {
                 usedGP += getGP(u);
                 if (u.uuid) usedGUIDs.add(u.uuid);
             });
-            
-            // Pool bereinigen
             const newPool = pool.filter(u => !consumed.includes(u));
             rosterPool.set(searchKey, newPool);
-
             currentFillState.set(req.name, previouslyFilled + take);
         }
 
         if (take < neededNow) {
             const stillMissing = neededNow - take;
-            // FIX ANZEIGE: Namen so oft pushen wie sie fehlen
             for(let i=0; i<stillMissing; i++) missingNames.push(req.name);
-
-            missingDetails.push({
-                name: req.name,
-                relic: minRelic,
-                count: stillMissing,
-                platoonPoints: fullReward
-            });
+            missingDetails.push({ name: req.name, relic: minRelic, count: stillMissing, platoonPoints: fullReward });
         }
     }
 
     let totalFilledCount = 0;
-    for(const count of currentFillState.values()) {
-        totalFilledCount += count;
-    }
+    for(const count of currentFillState.values()) totalFilledCount += count;
 
     let status = 'MISSING';
     if (totalFilledCount >= totalSlots && totalSlots > 0) status = 'FILLED';
     else if (totalFilledCount > 0) status = 'PARTIAL';
 
-    // FIX PUNKTE: Nur Punkte geben, wenn es JETZT voll ist und vorher NICHT voll war.
-    // Damit verhindern wir doppelte Punkte im Dump-Mode.
+    // Punkte nur geben, wenn es JETZT voll geworden ist
     const pointsGained = (status === 'FILLED' && !wasFullAtStart) ? fullReward : 0; 
 
-    return { 
-        usedGP, 
-        pointsGained, 
-        status, 
-        missingNames, 
-        missingDetails,
-        updatedFillState: currentFillState
-    };
+    return { usedGP, pointsGained, status, missingNames, missingDetails, updatedFillState: currentFillState };
 }
 /**
  * Prüft, ob wir den Rest bezahlen KÖNNEN (Simulation).
