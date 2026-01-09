@@ -176,7 +176,7 @@ async function getTBData(){
   try{
     let response = await axios.post("http://164.30.71.107:3200/data", {
         payload:{
-            version: "0.38.1:So2YPkkwQNi9kRKsi4dIwQ",
+            version: data.gameVersion,
             includePveUnits: true,
             items: "536870912"
         },
@@ -184,7 +184,7 @@ async function getTBData(){
      })
     let tables = await axios.post("http://164.30.71.107:3200/data", {
               payload:{
-                  version: "0.38.1:So2YPkkwQNi9kRKsi4dIwQ",
+                  version: data.gameVersion,
                   includePveUnits: true,
                   items: "32"
               },
@@ -202,6 +202,7 @@ async function getTBData(){
     `[${new Date().toLocaleTimeString()}] Fehler beim Abrufen der TB-Daten:`,
     err.message,
     )
+    console.log(err)
 }
 }
 
