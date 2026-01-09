@@ -386,39 +386,37 @@ function getGP(member) {
 
 
 
+
 /**
  * Berechnet die optimale Sternverteilung für eine Phase.
- * @param {number} guildGP - Die verfügbare GM für das Deployment (nach Abzug der Ops).
- * @param {Array} currentPlanets - Array der Planeten-Objekte mit 'starThresholds'.
+ * UPDATE: Bevorzugt jetzt Strategien mit mehr Rest-GP bei gleicher Sternzahl.
  */
 function solveRotePhase(guildGP, currentPlanets) {
     let bestStrategy = {
         totalStars: -1,
         usedGP: 0,
+        leftoverGP: -1,
         plan: [],
         score: -1
     };
 
-    // Sicherstellen, dass wir auf die Array-Indizes zugreifen können (auch wenn < 3 Planeten übergeben werden)
     const p1 = currentPlanets[0];
     const p2 = currentPlanets[1];
     const p3 = currentPlanets[2];
 
-    // Hilfsfunktion: Kosten für n Sterne auf einem Planeten holen
     const getCost = (planet, stars) => {
         if (!planet || stars === 0) return 0;
         return planet.starThresholds[stars - 1];
     };
 
-    // Wir iterieren durch alle Kombinationen (0-3 Sterne) für bis zu 3 Planeten
     for (let s1 = 0; s1 <= 3; s1++) {
-        if (!p1 && s1 > 0) break; // Abbruch, falls Planet 1 nicht existiert
+        if (!p1 && s1 > 0) break; 
 
         for (let s2 = 0; s2 <= 3; s2++) {
-            if (!p2 && s2 > 0) break; // Abbruch, falls Planet 2 nicht existiert
+            if (!p2 && s2 > 0) break; 
 
             for (let s3 = 0; s3 <= 3; s3++) {
-                if (!p3 && s3 > 0) break; // Abbruch, falls Planet 3 nicht existiert
+                if (!p3 && s3 > 0) break; 
 
                 // 1. Gesamtkosten berechnen
                 let cost = 0;
@@ -432,17 +430,20 @@ function solveRotePhase(guildGP, currentPlanets) {
                     let currentStars = s1 + s2 + s3;
 
                     // 3. Score berechnen
-                    // Basis: Anzahl Sterne * 1000
-                    // Bonus: +50 für jeden abgeschlossenen Planeten (3 Sterne)
-                    let score = currentStars * 1000;
-                    if (s1 === 3) score += 50;
-                    if (s2 === 3) score += 50;
-                    if (s3 === 3) score += 50;
+                    // Basis: Sterne sind das Wichtigste
+                    let score = currentStars * 10000; 
+                    
+                    // Bonus: 3 Sterne sind extrem wertvoll (Map Unlock)
+                    // Wir gewichten das höher als vorher, damit er 3 Sterne priorisiert
+                    if (s1 === 3) score += 5000;
+                    if (s2 === 3) score += 5000;
+                    if (s3 === 3) score += 5000;
 
-                    // Wenn besser als bisherige beste Lösung -> Speichern
-                    if (score > bestStrategy.score) {
+                    // Entscheidung: Ist diese Lösung besser?
+                    // A) Höherer Score
+                    // B) Gleicher Score, aber mehr Rest-GP (Effizienz!)
+                    if (score > bestStrategy.score || (score === bestStrategy.score && leftover > bestStrategy.leftoverGP)) {
                         
-                        // Plan-Objekt zusammenbauen
                         let plan = [];
                         if (p1) plan.push(createPlanetResult(p1, s1));
                         if (p2) plan.push(createPlanetResult(p2, s2));
@@ -466,7 +467,6 @@ function solveRotePhase(guildGP, currentPlanets) {
 
     return bestStrategy;
 }
-
 /**
  * Hilfsfunktion zum Erstellen des Ergebnis-Objekts für einen Planeten
  */
@@ -722,27 +722,42 @@ function findBestPath(currentState, allPlanetsData, baseRosterOriginal, guildTot
 
     const greedyStrategy = solveRotePhase(availableDeploymentGP, deploymentPlanetsInput);
 
-    // --- STRATEGIE-VERZWEIGUNG (SANDBAGGING) ---
+    // --- SCHRITT C: Strategie-Verzweigung (Sandbagging) ---
     let strategiesToTest = [greedyStrategy];
 
     greedyStrategy.plan.forEach((planItem, index) => {
-        if (planItem.targetStars === 1) {
+        // UPDATE: Sandbagging lohnt sich auch (und besonders!), wenn wir 2 Sterne haben.
+        // 2 Sterne sind oft eine Falle: Man kriegt Punkte, aber schaltet nichts frei und verliert den Preload.
+        // Daher prüfen wir Sandbagging jetzt solange wir NICHT 3 Sterne haben.
+        // Bedingung: > 0 (wir haben einen Stern investiert) und < 3 (Planet ist nicht fertig)
+        if (planItem.targetStars > 0 && planItem.targetStars < 3) {
+            
+            // Strategie klonen
             const sandbagStrategy = JSON.parse(JSON.stringify(greedyStrategy));
             const sbItem = sandbagStrategy.plan[index];
 
+            // WICHTIG: Wir merken uns, wie viele Sterne wir "geopfert" haben
+            const starsSacrificed = sbItem.targetStars;
+
+            // Manipulation: Sterne auf 0 setzen
             sbItem.targetStars = 0;
+            
+            // Kosten zurückholen
             const savedGP = sbItem.cost;
             sbItem.cost = 0;
             sbItem.extraDeployment += savedGP;
 
-            // --- PRELOAD FIX: Rest-GP auch nutzen! ---
+            // --- PRELOAD FIX (aus vorherigem Schritt) ---
             if (sandbagStrategy.leftoverGP > 0) {
                 sbItem.extraDeployment += sandbagStrategy.leftoverGP;
                 sandbagStrategy.leftoverGP = 0;
             }
 
             sbItem.isPreload = true;
-            sandbagStrategy.totalStars -= 1;
+            
+            // Stats anpassen: Wir ziehen ALLE geopferten Sterne ab (egal ob 1 oder 2)
+            sandbagStrategy.totalStars -= starsSacrificed;
+            
             sandbagStrategy.isSandbaggingVariant = true; 
             sandbagStrategy.sandbaggedPlanet = sbItem.name;
 
