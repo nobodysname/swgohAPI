@@ -10,7 +10,7 @@ const MSGPACK_FILE3 = "./data/DataData.json";
 const MSGPACK_FILE4 = "./data/SkillData.json";
 const MSGPACK_FILE5 = "./data/TBData.json";
 const MSGPACK_FILE6 = "./data/Metadata.json";
-const FETCH_INTERVAL = 60 * 60 * 1000; // 60 Minuten in Millisekunden
+const FETCH_INTERVAL = 30 * 60 * 1000; // 30 Minuten in Millisekunden
 var player;
 var latestGameVersion = "";
 const data = {
@@ -271,4 +271,4 @@ updateAll();
 // Danach alle 5 Minuten wiederholen
 setInterval(updateAll, FETCH_INTERVAL);
 
-console.log("Guild-Daten Auto-Fetch läuft alle 5 Minuten...");
+console.log("Guild-Daten Auto-Fetch läuft alle 30 Minuten...");
