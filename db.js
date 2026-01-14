@@ -1,15 +1,14 @@
 // db.js
-const Database = require('better-sqlite3')
-const path = require('path')
-const bcrypt = require('bcrypt')
+const Database = require("better-sqlite3");
+const path = require("path");
+const bcrypt = require("bcrypt");
 
 // DB-Datei
-const dbPath = path.join(process.cwd() + '/data', 'strategy.sqlite')
-
+const dbPath = path.join(process.cwd() + "/data", "strategy.sqlite");
 
 // DB öffnen
-const db = new Database(dbPath)
-db.pragma('journal_mode = WAL')
+const db = new Database(dbPath);
+db.pragma("journal_mode = WAL");
 
 // --------------------
 // Tabellen anlegen
@@ -46,28 +45,41 @@ CREATE TABLE IF NOT EXISTS strategy_rows (
   position INTEGER,
   FOREIGN KEY (zone_id) REFERENCES strategy_zones(id) ON DELETE CASCADE
 );
-`)
-  
+
+CREATE TABLE IF NOT EXISTS counters (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  opponent_leader_id TEXT NOT NULL,
+  counter_leader_id TEXT NOT NULL,
+  unit_2_id TEXT DEFAULT 'ANY',
+  unit_3_id TEXT DEFAULT 'ANY',
+  unit_4_id TEXT DEFAULT 'ANY',
+  unit_5_id TEXT DEFAULT 'ANY',
+  game_mode TEXT CHECK(game_mode IN ('GAC', 'TB', 'BOTH')) NOT NULL DEFAULT 'BOTH',
+  description TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+`);
 
 function verifyStrategyPassword(password) {
-    const settings = db.prepare(
-      'SELECT viewer_hash, admin_hash FROM strategy_settings WHERE id = 1'
-    ).get()
-  
-    if (!settings) return null
-  
-    if (bcrypt.compareSync(password, settings.admin_hash)) {
-      return 'admin'
-    }
-  
-    if (bcrypt.compareSync(password, settings.viewer_hash)) {
-      return 'viewer'
-    }
-  
-    return null
-  }
-module.exports = { 
-    db,
-    verifyStrategyPassword 
-}
+  const settings = db
+    .prepare(
+      "SELECT viewer_hash, admin_hash FROM strategy_settings WHERE id = 1"
+    )
+    .get();
 
+  if (!settings) return null;
+
+  if (bcrypt.compareSync(password, settings.admin_hash)) {
+    return "admin";
+  }
+
+  if (bcrypt.compareSync(password, settings.viewer_hash)) {
+    return "viewer";
+  }
+
+  return null;
+}
+module.exports = {
+  db,
+  verifyStrategyPassword,
+};
