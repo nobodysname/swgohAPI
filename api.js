@@ -2,7 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 const service = require("./service/service");
 const COMLINK_BASE = "http://164.30.71.107:3200";
-const { getVersion } = require("./api2");
+const { runImageCache } = require("./cacheImages"); // <--- IMPORTIEREN
 
 const MSGPACK_FILE = "./data/GuildData.json";
 const MSGPACK_FILE2 = "./data/PlayerData.json";
@@ -17,6 +17,7 @@ const data = {
   gameVersion: "",
   localVersion: "",
 };
+
 
 // Funktion, um die Guild-Daten zu holen und als JSON zu speichern
 async function fetchAndSaveGuild() {
@@ -221,7 +222,7 @@ async function getTBData() {
   }
 }
 
-function formatData() {
+async function formatData() {
   try {
     let player = JSON.parse(fs.readFileSync("./data/PlayerData.json"));
     let data = JSON.parse(fs.readFileSync("./data/DataData.json"));
@@ -238,9 +239,14 @@ function formatData() {
     );
 
     console.log(`[${new Date().toLocaleTimeString()}] Daten formartiert`);
+
+    // HIER IST DER NEUE AUFRUF:
+    // Nachdem TestData.json geschrieben wurde, updaten wir den Cache
+    await runImageCache(); 
+
   } catch (error) {
     console.error(
-      `[${new Date().toLocaleTimeString()}] Fehler beim Formartieren der Daten:`,
+      `[${new Date().toLocaleTimeString()}] Fehler beim Formatieren/Caching:`,
       error.message
     );
   }
@@ -257,7 +263,7 @@ async function updateAll() {
   }
   await fetchAndSaveGuild();
   await fetchAndSavePlayer();
-  formatData();
+  await formatData();
 }
 
 updateAll();
