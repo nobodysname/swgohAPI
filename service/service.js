@@ -502,43 +502,81 @@ function solveRotePhase(guildGP, currentPlanets) {
 /**
  * Hilfsfunktion zum Erstellen des Ergebnis-Objekts für einen Planeten
  */
+/**
+ * Hilfsfunktion zum Erstellen des Ergebnis-Objekts für einen Planeten
+ * FIX: Speichert jetzt auch Preload/Ops/Strike Werte für die Anzeige!
+ */
 function createPlanetResult(planet, stars) {
   return {
     name: planet.name,
     targetStars: stars,
     cost: stars > 0 ? planet.starThresholds[stars - 1] : 0,
-    thresholds: planet.starThresholds,
+    
+    // FÜR DIE SIMULATION (Sandbagging etc.): Die "Adjusted" Thresholds (was fehlt noch an GP?)
+    // Wir nennen es explizit anders oder nutzen es vorsichtig.
+    // Da deine Logik bisher auf .thresholds zugegriffen hat, lassen wir das als ADJUSTED.
+    thresholds: planet.starThresholds, 
+
+    // FÜR DAS FRONTEND (Progress Bar): Die Originalen Thresholds
+    originalThresholds: planet.originalThresholds || planet.starThresholds,
+
     extraDeployment: 0,
     isPreload: false,
-  };
+    preloadedTP: planet.preloadedTP || 0,
+    opsTP: planet.opsTP || 0,
+    strikeTP: planet.strikeTP || 0
+  }
 }
 
 /**
  * Verteilt die Rest-GM intelligent auf 0-Sterne-Planeten.
  */
+/**
+ * Verteilt die Rest-GM intelligent auf 0-Sterne-Planeten (Preloading).
+ * FIX: Beachtet jetzt das Cap (Threshold - 1), damit nicht versehentlich
+ * ein Stern ausgelöst wird, der die Punkte für den nächsten Tag "frisst".
+ */
 function distributeRemainingGP(strategy) {
   let remaining = strategy.leftoverGP;
   if (remaining <= 0) return;
 
-  // Wir suchen NUR nach Planeten, die aktuell 0 Sterne im Plan haben.
-  // Denn dort bleiben die Punkte für die nächste Phase erhalten (Pre-load).
-  // Bei Planeten mit 1 oder 2 Sternen würden die Punkte verfallen (Reset nach Sternerhalt).
+  // Wir suchen Planeten, die aktuell 0 Sterne im Plan haben.
   let preloadCandidates = strategy.plan.filter((p) => p.targetStars === 0);
 
   if (preloadCandidates.length > 0) {
-    // Wir nehmen den Planeten, der am wenigsten für den 1. Stern braucht (effizientester Start für nächste Phase)
-    // Sortieren nach dem 1. Threshold
+    // Sortieren: Den Planeten, der am wenigsten für den 1. Stern braucht, zuerst füllen
+    // (Das ist meistens am effizientesten für den nächsten Tag)
     preloadCandidates.sort((a, b) => a.thresholds[0] - b.thresholds[0]);
 
-    // Den besten Kandidaten auswählen
-    let bestTarget = preloadCandidates[0];
+    // Wir iterieren durch die Kandidaten, falls der erste das Cap erreicht
+    for (const planet of preloadCandidates) {
+      if (remaining <= 0) break;
 
-    // Alles draufpacken
-    bestTarget.extraDeployment = remaining;
-    bestTarget.isPreload = true;
+      // WICHTIG: Die Thresholds im Strategy-Objekt sind bereits "adjusted"
+      // (also: Original Threshold - Ops - Combat).
+      // Das bedeutet, planet.thresholds[0] ist genau das Deployment, das für Stern 1 fehlt.
+      
+      // Wir wollen 1 Punkt UNTER dem Stern bleiben (Preload Cap)
+      const spaceToCap = planet.thresholds[0] - 1;
 
-    // Strategie-Objekt aktualisieren (alles verbraucht)
-    strategy.leftoverGP = 0;
+      // Falls aus irgendeinem Grund (durch Ops/Combat) der Stern schon voll ist
+      // (spaceToCap <= 0), überspringen wir, um Fehler zu vermeiden.
+      if (spaceToCap > 0) {
+        // Wir nehmen so viel wie wir haben, aber maximal bis zum Cap
+        const amountToDeploy = Math.min(remaining, spaceToCap);
+
+        planet.extraDeployment += amountToDeploy;
+        planet.isPreload = true;
+
+        // Vom Rest abziehen
+        remaining -= amountToDeploy;
+      }
+    }
+
+    // Strategie-Objekt aktualisieren:
+    // Wenn wir GP nicht unterbringen konnten (weil alle Preloads bei 99% sind),
+    // bleibt es als "wasted" leftoverGP stehen.
+    strategy.leftoverGP = remaining;
   }
 }
 function cloneRosterPool(pool) {
@@ -781,35 +819,70 @@ function findBestPath(
   let strategiesToTest = [greedyStrategy];
 
   greedyStrategy.plan.forEach((planItem, index) => {
-    // UPDATE: Sandbagging lohnt sich auch (und besonders!), wenn wir 2 Sterne haben.
-    // 2 Sterne sind oft eine Falle: Man kriegt Punkte, aber schaltet nichts frei und verliert den Preload.
-    // Daher prüfen wir Sandbagging jetzt solange wir NICHT 3 Sterne haben.
-    // Bedingung: > 0 (wir haben einen Stern investiert) und < 3 (Planet ist nicht fertig)
+    // Bedingung: Planet hat investierte Sterne (>0), ist aber nicht fertig (<3)
     if (planItem.targetStars > 0 && planItem.targetStars < 3) {
       // Strategie klonen
       const sandbagStrategy = JSON.parse(JSON.stringify(greedyStrategy));
       const sbItem = sandbagStrategy.plan[index];
 
-      // WICHTIG: Wir merken uns, wie viele Sterne wir "geopfert" haben
+      // Sterne merken, die wir opfern
       const starsSacrificed = sbItem.targetStars;
 
-      // Manipulation: Sterne auf 0 setzen
+      // 1. Verfügbare GP einsammeln:
+      //    Die Kosten vom Stern, den wir gerade löschen + das globale Rest-GP der Strategie
+      let availableGP = sbItem.cost + sandbagStrategy.leftoverGP;
+
+      // 2. Planet resetten
       sbItem.targetStars = 0;
-
-      // Kosten zurückholen
-      const savedGP = sbItem.cost;
       sbItem.cost = 0;
-      sbItem.extraDeployment += savedGP;
+      sbItem.isPreload = true;
+      sandbagStrategy.leftoverGP = 0; // Haben wir oben in availableGP übernommen
 
-      // --- PRELOAD FIX (aus vorherigem Schritt) ---
-      if (sandbagStrategy.leftoverGP > 0) {
-        sbItem.extraDeployment += sandbagStrategy.leftoverGP;
-        sandbagStrategy.leftoverGP = 0;
+      // 3. CAP PRÜFEN: Wie viel passt maximal auf diesen Planeten (bis kurz vor Stern 1)?
+      //    thresholds[0] ist der Adjusted Threshold (also genau das, was für Stern 1 fehlt).
+      const cap = Math.max(0, sbItem.thresholds[0] - 1);
+      
+      // Bereits existierendes Deployment berücksichtigen (falls durch solveRotePhase schon was drauf war, sollte hier aber 0 sein da wir Stern gelöscht haben)
+      const spaceLeft = cap; 
+
+      // 4. GP verteilen auf den Sandbag-Planeten (aber nur bis zum Cap!)
+      const amountToDeploy = Math.min(availableGP, spaceLeft);
+      sbItem.extraDeployment = amountToDeploy;
+      
+      // Restmenge berechnen
+      let overflowGP = availableGP - amountToDeploy;
+
+      // 5. FALLS ÜBERSCHUSS: Versuchen, auf ANDERE 0-Sterne-Planeten zu verteilen
+      if (overflowGP > 0) {
+        // Finde andere Planeten im Plan, die 0 Sterne haben und NICHT der aktuelle sind
+        const otherCandidates = sandbagStrategy.plan.filter(p => 
+            p.name !== sbItem.name && p.targetStars === 0
+        );
+
+        // Sortieren nach Effizienz (kleinster Threshold zuerst)
+        otherCandidates.sort((a, b) => a.thresholds[0] - b.thresholds[0]);
+
+        for (const candidate of otherCandidates) {
+            if (overflowGP <= 0) break;
+
+            const candCap = Math.max(0, candidate.thresholds[0] - 1);
+            // Wichtig: Der Kandidat hat evtl. schon extraDeployment aus der ursprünglichen Strategie
+            const currentExtra = candidate.extraDeployment || 0;
+            const candSpace = Math.max(0, candCap - currentExtra);
+
+            if (candSpace > 0) {
+                const add = Math.min(overflowGP, candSpace);
+                candidate.extraDeployment += add;
+                candidate.isPreload = true;
+                overflowGP -= add;
+            }
+        }
       }
 
-      sbItem.isPreload = true;
+      // 6. Wenn immer noch was übrig ist, geht es zurück in den globalen Pool (wasted / saved for next day logic internally)
+      sandbagStrategy.leftoverGP = overflowGP;
 
-      // Stats anpassen: Wir ziehen ALLE geopferten Sterne ab (egal ob 1 oder 2)
+      // Stats anpassen: Wir ziehen die geopferten Sterne ab
       sandbagStrategy.totalStars -= starsSacrificed;
 
       sandbagStrategy.isSandbaggingVariant = true;

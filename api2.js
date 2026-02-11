@@ -5,7 +5,7 @@ const service = require("./service/service");
 const { default: axios } = require("axios");
 const strategyAuth = require("./strategyAuth");
 const { db } = require("./db");
-
+const { getImageFromRam } = require("./cacheImages");
 const router = express.Router();
 
 const logRouteUsage = db.prepare(`
@@ -29,6 +29,7 @@ router.use((req, res, next) => {
 
   next();
 });
+require("dotenv").config();
 
 router.post("/getGuild", async (req, res) => {
   try {
@@ -215,32 +216,16 @@ router.get("/unitNames", (req, res) => {
   }
 });
 
-router.get("/icons/:assetName", async (req, res) => {
-  try {
-    const assetName = req.params.assetName;
+router.get("/icons/:assetName", (req, res) => {
+  const assetName = req.params.assetName;
 
-    const metadata = JSON.parse(
-      fs.readFileSync("./data/Metadata.json", "utf-8")
-    );
+  // Wir fragen einfach den Store
+  const imgData = getImageFromRam(assetName);
 
-    const response = await axios({
-      method: "get",
-      url: "http://164.30.71.107:3001/Asset/list",
-      params: {
-        version: metadata.assetVersion,
-        assetName: assetName,
-      },
-      responseType: "stream",
-    });
-    console.log(response);
-    res.set("Content-Type", response.headers["content-type"]);
-
-    response.data.pipe(res);
-
-    console.log(`GET /icons/${assetName} - Success`);
-  } catch (err) {
-    console.error("Fehler beim Laden des Icons:", err.message);
-    res.status(404).send("Icon not found");
+  if (imgData) {
+    res.json({ image: imgData.base64 });
+  } else {
+    res.status(404).json({ error: "Image not found in RAM" });
   }
 });
 // A) ROUTE: Simulation ausführen (Admin Only, speichert JSON)
@@ -486,28 +471,31 @@ router.delete("/strategy/row/:rowId", strategyAuth("admin"), (req, res) => {
 });
 // routes/counters.js (oder in server.js einfügen)
 
-// 1. Alle Counter abrufen (Public / Viewer)
-router.get("/counters", strategyAuth("viewer"), (req, res) => {
+ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+router.get("/counters", (req, res) => {
   try {
+    // Manuelle Prüfung für die Rolle (ohne zu blockieren)
+    const providedPass = req.headers["x-strategy-password"];
+
+    // Einfacher Check: Stimmt das Passwort?
+    const isCorrect = providedPass === ADMIN_PASSWORD;
+
     const rows = db
-      .prepare(
-        `
-      SELECT * FROM counters ORDER BY created_at DESC
-    `
-      )
+      .prepare(`SELECT * FROM counters ORDER BY created_at DESC`)
       .all();
 
-    // Admin-Status zurückgeben, damit das Frontend weiß, ob Edit-Buttons angezeigt werden
     res.json({
       counters: rows,
-      role: req.strategyRole, // 'admin' oder 'viewer'
+      // Wenn Passwort stimmt -> 'admin', sonst -> 'viewer'
+      role: isCorrect ? "admin" : "viewer",
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 2. Neuen Counter erstellen (Admin Only)
+// 2. Neuen Counter erstellen (Strict: Admin Only)
 router.post("/counters", strategyAuth("admin"), (req, res) => {
   const {
     opponentLeaderId,
@@ -526,8 +514,8 @@ router.post("/counters", strategyAuth("admin"), (req, res) => {
         opponent_leader_id, 
         counter_leader_id, 
         unit_2_id, unit_3_id, unit_4_id, unit_5_id, 
-        game_mode, description
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        game_mode, description, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     `);
 
     const result = stmt.run(
@@ -547,7 +535,7 @@ router.post("/counters", strategyAuth("admin"), (req, res) => {
   }
 });
 
-// 3. Counter Löschen (Admin Only)
+// 3. Counter Löschen (Strict: Admin Only)
 router.delete("/counters/:id", strategyAuth("admin"), (req, res) => {
   try {
     const stmt = db.prepare("DELETE FROM counters WHERE id = ?");
