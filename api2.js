@@ -8,6 +8,28 @@ const { db } = require("./db");
 
 const router = express.Router();
 
+const logRouteUsage = db.prepare(`
+  INSERT INTO route_usage (method, route, path, status)
+  VALUES (?, ?, ?, ?)
+`);
+
+router.use((req, res, next) => {
+  res.on("finish", () => {
+    try {
+      const baseUrl = req.baseUrl || "";
+      const routePath = req.route?.path || req.path || "";
+      const route = `${baseUrl}${routePath}`;
+      const path = (req.originalUrl || "").split("?")[0] || route;
+
+      logRouteUsage.run(req.method, route, path, res.statusCode);
+    } catch (err) {
+      console.error("Monitoring log failed:", err.message);
+    }
+  });
+
+  next();
+});
+
 router.post("/getGuild", async (req, res) => {
   try {
     if (fs.existsSync("./data/latestGuild.json")) {
@@ -534,6 +556,82 @@ router.delete("/counters/:id", strategyAuth("admin"), (req, res) => {
     if (result.changes === 0)
       return res.status(404).json({ error: "Not found" });
     res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Monitoring: Aggregierte Nutzung nach Zeit
+router.get("/monitoring", (req, res) => {
+  try {
+    const bucket = String(req.query.bucket || "hour").toLowerCase();
+    const bucketFormats = {
+      minute: "%Y-%m-%d %H:%M:00",
+      hour: "%Y-%m-%d %H:00:00",
+      day: "%Y-%m-%d",
+    };
+
+    if (!bucketFormats[bucket]) {
+      return res.status(400).json({
+        error: "Invalid bucket. Use minute, hour, or day.",
+      });
+    }
+
+    const params = [];
+    let where = "WHERE 1 = 1";
+
+    if (req.query.from) {
+      where += " AND created_at >= datetime(?)";
+      params.push(req.query.from);
+    }
+
+    if (req.query.to) {
+      where += " AND created_at <= datetime(?)";
+      params.push(req.query.to);
+    }
+
+    if (req.query.route) {
+      where += " AND route = ?";
+      params.push(req.query.route);
+    }
+
+    if (req.query.method) {
+      where += " AND method = ?";
+      params.push(String(req.query.method).toUpperCase());
+    }
+
+    const rows = db
+      .prepare(
+        `
+      SELECT
+        route,
+        method,
+        strftime('${bucketFormats[bucket]}', created_at) AS bucket,
+        COUNT(*) AS count
+      FROM route_usage
+      ${where}
+      GROUP BY route, method, bucket
+      ORDER BY bucket DESC, count DESC
+    `
+      )
+      .all(...params);
+
+    res.json({
+      bucket,
+      from: req.query.from ?? null,
+      to: req.query.to ?? null,
+      rows,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Monitoring: Alles loeschen (Admin)
+router.delete("/monitoring", strategyAuth("admin"), (req, res) => {
+  try {
+    const result = db.prepare("DELETE FROM route_usage").run();
+    res.json({ success: true, deleted: result.changes });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

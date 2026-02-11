@@ -58,6 +58,18 @@ CREATE TABLE IF NOT EXISTS counters (
   description TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS route_usage (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  method TEXT NOT NULL,
+  route TEXT NOT NULL,
+  path TEXT NOT NULL,
+  status INTEGER NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_route_usage_created_at ON route_usage(created_at);
+CREATE INDEX IF NOT EXISTS idx_route_usage_route ON route_usage(route);
 `);
 
 function verifyStrategyPassword(password) {
