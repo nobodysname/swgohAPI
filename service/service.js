@@ -1322,12 +1322,10 @@ function calculateStrikeZonePoints(planet, successRate) {
 
   // 1. Maximale Punkte pro Spieler berechnen
   let maxPointsPerPlayer = 0;
-
   planet.strikeZones.forEach((zone) => {
+    console.log(zone.rewards[zone.rewards.length-1])
     // User-Anweisung: "einfach alle Rewards der Phasen zusammenrechnen"
-    const missionTotal = zone.rewards.reduce((sum, reward) => {
-      return sum + (reward.galacticScore || 0);
-    }, 0);
+    const missionTotal = zone.rewards[zone.rewards.length-1].galacticScore
 
     maxPointsPerPlayer += missionTotal;
   });
