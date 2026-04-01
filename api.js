@@ -218,7 +218,6 @@ async function getTBData() {
       `[${new Date().toLocaleTimeString()}] Fehler beim Abrufen der TB-Daten:`,
       err.message
     );
-    console.log(err);
   }
 }
 
