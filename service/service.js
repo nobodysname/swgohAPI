@@ -501,9 +501,6 @@ function solveRotePhase(guildGP, currentPlanets) {
 }
 /**
  * Hilfsfunktion zum Erstellen des Ergebnis-Objekts für einen Planeten
- */
-/**
- * Hilfsfunktion zum Erstellen des Ergebnis-Objekts für einen Planeten
  * FIX: Speichert jetzt auch Preload/Ops/Strike Werte für die Anzeige!
  */
 function createPlanetResult(planet, stars) {
@@ -528,9 +525,7 @@ function createPlanetResult(planet, stars) {
   }
 }
 
-/**
- * Verteilt die Rest-GM intelligent auf 0-Sterne-Planeten.
- */
+
 /**
  * Verteilt die Rest-GM intelligent auf 0-Sterne-Planeten (Preloading).
  * FIX: Beachtet jetzt das Cap (Threshold - 1), damit nicht versehentlich
@@ -676,11 +671,12 @@ function simulateFullCampaign(
       totalStarsAccumulated: 0,
       pathHistory: [],
       existingPlanetTP: new Map(),
+      completedStrikeZones: new Set(), // <--- NEU: Hier merken wir uns erledigte CMs
     },
     relevantPlanets,
     baseRosterMap,
     guildTotalGP,
-    ratesArray // Array übergeben
+    ratesArray
   );
 
   // NEU: Priority List generieren und anhängen
@@ -690,9 +686,6 @@ function simulateFullCampaign(
   return bestResult;
 }
 
-/**
- * REKURSIVE PFADSUCHE
- */
 /**
  * REKURSIVE PFADSUCHE (Core Logic)
  * * Features:
@@ -787,14 +780,36 @@ function findBestPath(
   });
 
   // --- DEPLOYMENT ---
-  const currentRate = ratesArray[currentState.day - 1] || 0;
+  
+  // Kopie des Sets für den aktuellen Zweig der Simulation
+  const currentCompletedStrikeZones = new Set(currentState.completedStrikeZones || []);
 
   const deploymentPlanetsInput = currentState.activePlanets.map((p) => {
     const opsInfo = dailyOpsData.get(p.id);
     const opsTP = opsInfo?.tp || 0;
     const preloadedTP = currentState.existingPlanetTP.get(p.id) || 0;
-    const strikeTP = calculateStrikeZonePoints(p, currentRate);
+    
+    let strikeTP = 0;
+    
+    // NEU: Nur berechnen, wenn die Combat Missions auf diesem Planeten noch NICHT gemacht wurden
+    if (!currentCompletedStrikeZones.has(p.id)) {
+      const phaseIndex = (p.phase || 1) - 1;
+      const planetRate = ratesArray[phaseIndex] !== undefined 
+          ? ratesArray[phaseIndex] 
+          : (ratesArray[ratesArray.length - 1] || 0);
+          
+      strikeTP = calculateStrikeZonePoints(p, planetRate);
+      currentCompletedStrikeZones.add(p.id); // Planet als erledigt markieren!
+    }
+
     const totalStartingTP = opsTP + preloadedTP + strikeTP;
+
+    // Mindest-Sterne berechnen
+    let autoStars = 0;
+    if (totalStartingTP >= p.starThresholds[2]) autoStars = 3;
+    else if (totalStartingTP >= p.starThresholds[1]) autoStars = 2;
+    else if (totalStartingTP >= p.starThresholds[0]) autoStars = 1;
+
     const adjustedThresholds = p.starThresholds.map((t) =>
       Math.max(0, t - totalStartingTP)
     );
@@ -807,6 +822,7 @@ function findBestPath(
       opsTP: opsTP,
       preloadedTP: preloadedTP,
       strikeTP: strikeTP,
+      autoStars: autoStars
     };
   });
 
@@ -982,6 +998,7 @@ function findBestPath(
           pathHistory: [...currentState.pathHistory, stepLog],
           existingPlanetTP: nextDayPreloadMap,
           opsProgress: nextDayOpsProgress,
+          completedStrikeZones: currentCompletedStrikeZones, // <--- NEU: Gedächtnis an den nächsten Tag übergeben
         },
         allPlanetsData,
         baseRosterOriginal,
