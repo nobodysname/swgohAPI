@@ -508,11 +508,11 @@ function createPlanetResult(planet, stars) {
     name: planet.name,
     targetStars: stars,
     cost: stars > 0 ? planet.starThresholds[stars - 1] : 0,
-    
+
     // FÜR DIE SIMULATION (Sandbagging etc.): Die "Adjusted" Thresholds (was fehlt noch an GP?)
     // Wir nennen es explizit anders oder nutzen es vorsichtig.
     // Da deine Logik bisher auf .thresholds zugegriffen hat, lassen wir das als ADJUSTED.
-    thresholds: planet.starThresholds, 
+    thresholds: planet.starThresholds,
 
     // FÜR DAS FRONTEND (Progress Bar): Die Originalen Thresholds
     originalThresholds: planet.originalThresholds || planet.starThresholds,
@@ -521,10 +521,9 @@ function createPlanetResult(planet, stars) {
     isPreload: false,
     preloadedTP: planet.preloadedTP || 0,
     opsTP: planet.opsTP || 0,
-    strikeTP: planet.strikeTP || 0
-  }
+    strikeTP: planet.strikeTP || 0,
+  };
 }
-
 
 /**
  * Verteilt die Rest-GM intelligent auf 0-Sterne-Planeten (Preloading).
@@ -550,7 +549,7 @@ function distributeRemainingGP(strategy) {
       // WICHTIG: Die Thresholds im Strategy-Objekt sind bereits "adjusted"
       // (also: Original Threshold - Ops - Combat).
       // Das bedeutet, planet.thresholds[0] ist genau das Deployment, das für Stern 1 fehlt.
-      
+
       // Wir wollen 1 Punkt UNTER dem Stern bleiben (Preload Cap)
       const spaceToCap = planet.thresholds[0] - 1;
 
@@ -780,24 +779,27 @@ function findBestPath(
   });
 
   // --- DEPLOYMENT ---
-  
+
   // Kopie des Sets für den aktuellen Zweig der Simulation
-  const currentCompletedStrikeZones = new Set(currentState.completedStrikeZones || []);
+  const currentCompletedStrikeZones = new Set(
+    currentState.completedStrikeZones || []
+  );
 
   const deploymentPlanetsInput = currentState.activePlanets.map((p) => {
     const opsInfo = dailyOpsData.get(p.id);
     const opsTP = opsInfo?.tp || 0;
     const preloadedTP = currentState.existingPlanetTP.get(p.id) || 0;
-    
+
     let strikeTP = 0;
-    
+
     // NEU: Nur berechnen, wenn die Combat Missions auf diesem Planeten noch NICHT gemacht wurden
     if (!currentCompletedStrikeZones.has(p.id)) {
       const phaseIndex = (p.phase || 1) - 1;
-      const planetRate = ratesArray[phaseIndex] !== undefined 
-          ? ratesArray[phaseIndex] 
-          : (ratesArray[ratesArray.length - 1] || 0);
-          
+      const planetRate =
+        ratesArray[phaseIndex] !== undefined
+          ? ratesArray[phaseIndex]
+          : ratesArray[ratesArray.length - 1] || 0;
+
       strikeTP = calculateStrikeZonePoints(p, planetRate);
       currentCompletedStrikeZones.add(p.id); // Planet als erledigt markieren!
     }
@@ -822,7 +824,7 @@ function findBestPath(
       opsTP: opsTP,
       preloadedTP: preloadedTP,
       strikeTP: strikeTP,
-      autoStars: autoStars
+      autoStars: autoStars,
     };
   });
 
@@ -857,41 +859,41 @@ function findBestPath(
       // 3. CAP PRÜFEN: Wie viel passt maximal auf diesen Planeten (bis kurz vor Stern 1)?
       //    thresholds[0] ist der Adjusted Threshold (also genau das, was für Stern 1 fehlt).
       const cap = Math.max(0, sbItem.thresholds[0] - 1);
-      
+
       // Bereits existierendes Deployment berücksichtigen (falls durch solveRotePhase schon was drauf war, sollte hier aber 0 sein da wir Stern gelöscht haben)
-      const spaceLeft = cap; 
+      const spaceLeft = cap;
 
       // 4. GP verteilen auf den Sandbag-Planeten (aber nur bis zum Cap!)
       const amountToDeploy = Math.min(availableGP, spaceLeft);
       sbItem.extraDeployment = amountToDeploy;
-      
+
       // Restmenge berechnen
       let overflowGP = availableGP - amountToDeploy;
 
       // 5. FALLS ÜBERSCHUSS: Versuchen, auf ANDERE 0-Sterne-Planeten zu verteilen
       if (overflowGP > 0) {
         // Finde andere Planeten im Plan, die 0 Sterne haben und NICHT der aktuelle sind
-        const otherCandidates = sandbagStrategy.plan.filter(p => 
-            p.name !== sbItem.name && p.targetStars === 0
+        const otherCandidates = sandbagStrategy.plan.filter(
+          (p) => p.name !== sbItem.name && p.targetStars === 0
         );
 
         // Sortieren nach Effizienz (kleinster Threshold zuerst)
         otherCandidates.sort((a, b) => a.thresholds[0] - b.thresholds[0]);
 
         for (const candidate of otherCandidates) {
-            if (overflowGP <= 0) break;
+          if (overflowGP <= 0) break;
 
-            const candCap = Math.max(0, candidate.thresholds[0] - 1);
-            // Wichtig: Der Kandidat hat evtl. schon extraDeployment aus der ursprünglichen Strategie
-            const currentExtra = candidate.extraDeployment || 0;
-            const candSpace = Math.max(0, candCap - currentExtra);
+          const candCap = Math.max(0, candidate.thresholds[0] - 1);
+          // Wichtig: Der Kandidat hat evtl. schon extraDeployment aus der ursprünglichen Strategie
+          const currentExtra = candidate.extraDeployment || 0;
+          const candSpace = Math.max(0, candCap - currentExtra);
 
-            if (candSpace > 0) {
-                const add = Math.min(overflowGP, candSpace);
-                candidate.extraDeployment += add;
-                candidate.isPreload = true;
-                overflowGP -= add;
-            }
+          if (candSpace > 0) {
+            const add = Math.min(overflowGP, candSpace);
+            candidate.extraDeployment += add;
+            candidate.isPreload = true;
+            overflowGP -= add;
+          }
         }
       }
 
@@ -1323,9 +1325,8 @@ function calculateStrikeZonePoints(planet, successRate) {
   // 1. Maximale Punkte pro Spieler berechnen
   let maxPointsPerPlayer = 0;
   planet.strikeZones.forEach((zone) => {
-    console.log(zone.rewards[zone.rewards.length-1])
     // User-Anweisung: "einfach alle Rewards der Phasen zusammenrechnen"
-    const missionTotal = zone.rewards[zone.rewards.length-1].galacticScore
+    const missionTotal = zone.rewards[zone.rewards.length - 1].galacticScore;
 
     maxPointsPerPlayer += missionTotal;
   });
@@ -1432,6 +1433,394 @@ function generatePriorityList(bestPathResult) {
   return listByPhase;
 }
 
+function runTbSimulationFromFiles(
+  guildGP,
+  strikeZoneSuccessRates,
+  filePaths = {}
+) {
+  const parsedGuildGP = Number(guildGP);
+  if (!Number.isFinite(parsedGuildGP)) {
+    throw new Error("Ungueltige guildGP");
+  }
+
+  const isValidSingleRate =
+    typeof strikeZoneSuccessRates === "number" &&
+    Number.isFinite(strikeZoneSuccessRates);
+  const isValidRateArray =
+    Array.isArray(strikeZoneSuccessRates) &&
+    strikeZoneSuccessRates.length > 0 &&
+    strikeZoneSuccessRates.every(
+      (rate) => typeof rate === "number" && Number.isFinite(rate)
+    );
+
+  if (!isValidSingleRate && !isValidRateArray) {
+    throw new Error("Ungueltige strikeZoneSuccessRates");
+  }
+
+  const tbDataPath = filePaths.tbDataPath || "./data/TBData.json";
+  const tbLocalizationPath =
+    filePaths.tbLocalizationPath || "./data/TBLocalization.json";
+  const opDataPath = filePaths.opDataPath || "./opData/OpData.json";
+  const unitsPath = filePaths.unitsPath || "./data/TestData.json";
+
+  let raw = JSON.parse(fs.readFileSync(tbDataPath, "utf-8"));
+  let text = JSON.parse(fs.readFileSync(tbLocalizationPath, "utf-8"));
+  const opData = JSON.parse(fs.readFileSync(opDataPath, "utf-8"));
+  const units = JSON.parse(fs.readFileSync(unitsPath, "utf-8"));
+
+  let territoryMap = buildLocalizationMap(text);
+  text = null;
+
+  let planets = buildPlanets(
+    raw.conflictZoneDefinition,
+    raw.strikeZoneDefinition,
+    raw.reconZoneDefinition
+  );
+  raw = null;
+
+  planets = applyPlanetNames(planets, territoryMap);
+  planets = attachOpUnitsToPlanets(planets, opData);
+  territoryMap = null;
+
+  const finalPlan = simulateFullCampaign(
+    units,
+    parsedGuildGP,
+    planets,
+    strikeZoneSuccessRates
+  );
+
+  finalPlan.simulationParams = {
+    guildGP: parsedGuildGP,
+    successRates: strikeZoneSuccessRates,
+  };
+
+  return finalPlan;
+}
+
+function getLatestSimulationFromFile(
+  latestSimulationPath = "./data/LatestSimulation.json"
+) {
+  if (!fs.existsSync(latestSimulationPath)) {
+    throw new Error("Keine Simulationsdaten vorhanden.");
+  }
+  return JSON.parse(fs.readFileSync(latestSimulationPath, "utf-8"));
+}
+
+function saveLatestSimulationToFile(
+  simulation,
+  latestSimulationPath = "./data/LatestSimulation.json"
+) {
+  fs.writeFileSync(latestSimulationPath, JSON.stringify(simulation, null, 2));
+}
+
+function getGuildGpForBotFromFile(
+  guildDataPath = "./data/GuildData.json",
+  gpReduction = 20000000
+) {
+  if (!fs.existsSync(guildDataPath)) {
+    throw new Error("GuildData.json wurde nicht gefunden.");
+  }
+
+  const guildData = JSON.parse(fs.readFileSync(guildDataPath, "utf-8"));
+  const fullGuildGP = Number(
+    guildData?.guild?.profile?.guildGalacticPowerForRequirement ??
+      guildData?.guild?.profile?.guildGalacticPower
+  );
+
+  if (!Number.isFinite(fullGuildGP)) {
+    throw new Error("Guild GP konnte nicht aus GuildData.json gelesen werden.");
+  }
+
+  return {
+    fullGuildGP,
+    analysisGuildGP: Math.max(0, fullGuildGP - gpReduction),
+  };
+}
+
+function getLatestGuildUnitsFromFile(
+  latestGuildPath = "./data/latestGuild.json"
+) {
+  if (!fs.existsSync(latestGuildPath)) {
+    throw new Error("latestGuild.json wurde nicht gefunden.");
+  }
+
+  const latestGuild = JSON.parse(fs.readFileSync(latestGuildPath, "utf-8"));
+  if (Array.isArray(latestGuild)) {
+    return latestGuild;
+  }
+
+  if (Array.isArray(latestGuild?.data)) {
+    return latestGuild.data;
+  }
+
+  throw new Error("Datei hat kein gueltiges Units-Array.");
+}
+
+function extractSuccessRatesFromSimulation(latestSimulation) {
+  return (
+    latestSimulation?.simulationParams?.successRates ||
+    latestSimulation?.simulationParams?.strikeZoneSuccessRates
+  );
+}
+
+function filterSimulationPathForBot(path) {
+  if (!Array.isArray(path)) return [];
+
+  return path.map((step) => {
+    const strategyPlan = step?.strategy?.plan || [];
+    const activePlanets = step?.activePlanets || [];
+    const opsSummaryByPlanet = new Map(
+      (step?.opsSummary || []).map((entry) => [entry?.[0], entry?.[1] || {}])
+    );
+    const opsDetailsByPlanet = new Map(
+      (step?.opsDetails || []).map((entry) => [entry?.planetId, entry || {}])
+    );
+
+    const planets = strategyPlan.map((planItem, index) => {
+      const planet = activePlanets[index] || {};
+      const opsSummary = opsSummaryByPlanet.get(planet.id) || {};
+      const opsDetails = opsDetailsByPlanet.get(planet.id) || {};
+      const platoons = (opsDetails?.platoons || opsSummary?.platoonDetails || [])
+        .map((p) => ({
+          id: p?.id || null,
+          name: p?.name || p?.nameKey || null,
+          zoneName: p?.zoneName || null,
+          status: p?.status || null,
+          pointsGained: Number(p?.pointsGained || 0),
+          missingUnits: Array.isArray(p?.missing) ? p.missing : [],
+        }))
+        .filter((p) => p.id || p.name);
+
+      const missingUnits = (opsSummary?.missingUnits || []).map((missing) => ({
+        name: missing?.name || null,
+        relic: Number(missing?.relic || 0),
+        count: Number(missing?.count || 0),
+        platoonPoints: Number(missing?.platoonPoints || 0),
+      }));
+
+      return {
+        planetId: planet.id || null,
+        planetName: planItem.name || planet.name || null,
+        phase: planet.phase || null,
+        targetStars: planItem.targetStars,
+        cost: planItem.cost,
+        extraDeployment: planItem.extraDeployment,
+        opsTP: planItem.opsTP || 0,
+        preloadedTP: planItem.preloadedTP || 0,
+        strikeTP: planItem.strikeTP || 0,
+        isPreload: Boolean(planItem.isPreload),
+        ops: {
+          totalTP: Number(opsDetails?.totalTP ?? opsSummary?.tp ?? 0),
+          gpCost: Number(opsSummary?.gpCost || 0),
+          missingUnits,
+          platoons,
+        },
+      };
+    });
+
+    return {
+      day: step.day,
+      stars: step.stars,
+      totalStarsSoFar: step.totalStarsSoFar,
+      planets,
+    };
+  });
+}
+
+function buildUnitIndexFromGuildUnits(units) {
+  const unitIndex = new Map();
+
+  for (const unit of units || []) {
+    if (!unit || typeof unit !== "object") continue;
+
+    const keys = new Set();
+    if (unit.name) keys.add(unit.name);
+    if (unit.id) keys.add(unit.id);
+    if (unit.baseId) keys.add(unit.baseId);
+
+    const firstMember = unit.members?.[0];
+    if (firstMember?.id) keys.add(firstMember.id);
+    if (firstMember?.baseId) keys.add(firstMember.baseId);
+
+    keys.forEach((key) => {
+      if (!unitIndex.has(key)) {
+        unitIndex.set(key, unit);
+      }
+    });
+  }
+
+  return unitIndex;
+}
+
+function getEligibleOwnersForRequirement(
+  unitIndex,
+  unitName,
+  unitId,
+  minRelic
+) {
+  const unit =
+    unitIndex.get(unitName) || (unitId ? unitIndex.get(unitId) : undefined);
+
+  if (!unit || !Array.isArray(unit.members)) {
+    return [];
+  }
+
+  const owners = unit.members
+    .filter((member) => isEligible(member, Number(minRelic) || 0))
+    .map((member) => member.memberName)
+    .filter(Boolean);
+
+  return Array.from(new Set(owners)).sort((a, b) => a.localeCompare(b));
+}
+
+function buildOpsScarcityList(path, latestGuildUnits, maxOwners) {
+  const parsedMaxOwners = Number(maxOwners);
+  const ownerLimit = Number.isFinite(parsedMaxOwners)
+    ? parsedMaxOwners
+    : Number.POSITIVE_INFINITY;
+  const unitIndex = buildUnitIndexFromGuildUnits(latestGuildUnits);
+  const planetsByPhaseAndId = new Map();
+
+  (path || []).forEach((step) => {
+    const day = Number(step?.day);
+    const activePlanets = step?.activePlanets || [];
+    const opsDetailsByPlanet = new Map(
+      (step?.opsDetails || []).map((entry) => [entry?.planetId, entry || {}])
+    );
+    const opsSummaryByPlanet = new Map(
+      (step?.opsSummary || []).map((entry) => [entry?.[0], entry?.[1] || {}])
+    );
+
+    activePlanets.forEach((planet) => {
+      const detailsPlatoons =
+        opsDetailsByPlanet.get(planet.id)?.platoons ||
+        opsSummaryByPlanet.get(planet.id)?.platoonDetails ||
+        [];
+
+      const filledPlatoonIds = new Set(
+        detailsPlatoons
+          .filter((platoon) => platoon?.status === "FILLED")
+          .map((platoon) => platoon?.id)
+          .filter(Boolean)
+      );
+
+      if (filledPlatoonIds.size === 0) {
+        return;
+      }
+
+      const planetKey = `${day}::${planet.id}`;
+      if (!planetsByPhaseAndId.has(planetKey)) {
+        planetsByPhaseAndId.set(planetKey, {
+          phase: day,
+          planetId: planet.id,
+          planetName: planet.name || planet.id,
+          missingUnitsMap: new Map(),
+        });
+      }
+
+      const planetEntry = planetsByPhaseAndId.get(planetKey);
+
+      (planet?.reconZones || []).forEach((rz) => {
+        const minRelic = Number(rz?.minRelicTier ?? 0);
+
+        (rz?.platoonDefinition || []).forEach((platoon) => {
+          if (!filledPlatoonIds.has(platoon?.id)) {
+            return;
+          }
+
+          (platoon?.units || []).forEach((req) => {
+            const unitName = req?.name || req?.id;
+            if (!unitName) return;
+
+            const unitKey = `${unitName}::R${minRelic}`;
+            if (!planetEntry.missingUnitsMap.has(unitKey)) {
+              const ownerNames = getEligibleOwnersForRequirement(
+                unitIndex,
+                unitName,
+                req?.id || null,
+                minRelic
+              );
+
+              planetEntry.missingUnitsMap.set(unitKey, {
+                unitName,
+                minRelic,
+                ownerNames,
+                availableOwners: ownerNames.length,
+              });
+            }
+          });
+        });
+      });
+    });
+  });
+
+  return Array.from(planetsByPhaseAndId.values())
+    .map((planetEntry) => {
+      const missingUnits = Array.from(planetEntry.missingUnitsMap.values())
+        .filter(
+          (entry) =>
+            entry.availableOwners > 0 && entry.availableOwners <= ownerLimit
+        )
+        .map((entry) => ({
+          unitName: entry.unitName,
+          minRelic: entry.minRelic,
+          ownerNames: entry.ownerNames,
+        }))
+        .sort((a, b) => {
+          if (a.ownerNames.length !== b.ownerNames.length) {
+            return a.ownerNames.length - b.ownerNames.length;
+          }
+          return a.unitName.localeCompare(b.unitName);
+        });
+
+      return {
+        phase: planetEntry.phase,
+        planetId: planetEntry.planetId,
+        planetName: planetEntry.planetName,
+        missingUnits,
+      };
+    })
+    .filter((planetEntry) => planetEntry.missingUnits.length > 0)
+    .sort((a, b) => {
+      if (a.phase !== b.phase) return a.phase - b.phase;
+      return a.planetName.localeCompare(b.planetName);
+    });
+}
+
+function filterPathByPhase(path, phase) {
+  const parsedPhase = Number(phase);
+  if (!Number.isFinite(parsedPhase)) {
+    return path;
+  }
+  return (path || []).filter((step) => Number(step?.day) === parsedPhase);
+}
+
+function buildTbBotLatestPayload(
+  latestSimulation,
+  latestGuildUnits,
+  options = {}
+) {
+  const maxOwners = options.maxOwners;
+  const path = latestSimulation?.path || [];
+  const filteredPath = filterPathByPhase(path, options.phase);
+  const selectedPhase = Number.isFinite(Number(options.phase))
+    ? Number(options.phase)
+    : null;
+
+  return {
+    totalStars: latestSimulation?.totalStars ?? null,
+    simulationParams: latestSimulation?.simulationParams || null,
+    selectedPhase,
+    path: filterSimulationPathForBot(filteredPath),
+    opScarceUnits: buildOpsScarcityList(
+      filteredPath,
+      latestGuildUnits,
+      maxOwners
+    ),
+    generatedAt: new Date().toISOString(),
+  };
+}
+
 module.exports = {
   convertGuild,
   convertPlayer,
@@ -1449,4 +1838,13 @@ module.exports = {
   buildLocalizationMap,
   attachOpUnitsToPlanets,
   simulateFullCampaign,
+  runTbSimulationFromFiles,
+  getLatestSimulationFromFile,
+  saveLatestSimulationToFile,
+  getGuildGpForBotFromFile,
+  getLatestGuildUnitsFromFile,
+  extractSuccessRatesFromSimulation,
+  filterSimulationPathForBot,
+  buildOpsScarcityList,
+  buildTbBotLatestPayload,
 };

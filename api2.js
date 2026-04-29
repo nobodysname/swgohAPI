@@ -8,6 +8,8 @@ const { db } = require("./db");
 const { getImageFromRam } = require("./cacheImages");
 const router = express.Router();
 
+const GUILD_GP_BUFFER = 20000000;
+
 const logRouteUsage = db.prepare(`
   INSERT INTO route_usage (method, route, path, status)
   VALUES (?, ?, ?, ?)
@@ -228,57 +230,23 @@ router.get("/icons/:assetName", (req, res) => {
     res.status(404).json({ error: "Image not found in RAM" });
   }
 });
+
 // A) ROUTE: Simulation ausführen (Admin Only, speichert JSON)
 router.post("/tb/simulate", strategyAuth("admin"), async (req, res) => {
   try {
-    // 1. Parameter aus dem Frontend empfangen
     const { guildGP, strikeZoneSuccessRates } = req.body;
 
-    if (!guildGP || !strikeZoneSuccessRates) {
+    if (guildGP === undefined || strikeZoneSuccessRates === undefined) {
       return res.status(400).json({
         error: "Fehlende Parameter: guildGP oder strikeZoneSuccessRates",
       });
     }
 
-    // 2. Daten einlesen (Wie gehabt)
-    let raw = JSON.parse(fs.readFileSync("./data/TBData.json", "utf-8"));
-    let text = JSON.parse(
-      fs.readFileSync("./data/TBLocalization.json", "utf-8")
-    );
-    let opData = JSON.parse(fs.readFileSync("./opData/OpData.json", "utf-8"));
-    const units = JSON.parse(fs.readFileSync("./data/TestData.json", "utf-8")); // Oder aus DB laden, falls vorhanden
-
-    // 3. Service Logik
-    let territoryMap = service.buildLocalizationMap(text);
-    text = null;
-    let planets = service.buildPlanets(
-      raw.conflictZoneDefinition,
-      raw.strikeZoneDefinition,
-      raw.reconZoneDefinition
-    );
-    raw = null;
-    planets = service.applyPlanetNames(planets, territoryMap);
-    planets = service.attachOpUnitsToPlanets(planets, opData);
-    territoryMap = null;
-
-    // 4. Simulation starten (Mit Parametern aus req.body!)
-    const finalPlan = service.simulateFullCampaign(
-      units,
-      Number(guildGP),
-      planets,
+    const finalPlan = service.runTbSimulationFromFiles(
+      guildGP,
       strikeZoneSuccessRates
     );
-
-    finalPlan.simulationParams = {
-      guildGP: guildGP,
-      successRates: strikeZoneSuccessRates,
-    };
-
-    // 5. Ergebnis speichern
-    fs.writeFileSync(
-      "./data/LatestSimulation.json",
-      JSON.stringify(finalPlan, null, 2)
-    );
+    service.saveLatestSimulationToFile(finalPlan);
 
     console.log("POST /tb/simulate - Calculation saved.");
     res.json(finalPlan);
@@ -291,19 +259,94 @@ router.post("/tb/simulate", strategyAuth("admin"), async (req, res) => {
 // B) ROUTE: Letztes Ergebnis abrufen (Public / Read-Only)
 router.get("/tb/latest", async (req, res) => {
   try {
-    const filePath = "./data/LatestSimulation.json";
-
-    if (!fs.existsSync(filePath)) {
-      return res
-        .status(404)
-        .json({ error: "Keine Simulationsdaten vorhanden." });
-    }
-
-    const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const data = service.getLatestSimulationFromFile();
     res.json(data);
   } catch (err) {
+    if (err.message === "Keine Simulationsdaten vorhanden.") {
+      return res.status(404).json({ error: err.message });
+    }
     console.error("Fehler beim Laden der TB Daten:", err.message);
     res.status(500).json({ error: "Laden fehlgeschlagen: " + err.message });
+  }
+});
+
+router.post("/tb/bot", strategyAuth("admin"), async (req, res) => {
+  try {
+    const latestSimulation = service.getLatestSimulationFromFile();
+    const strikeZoneSuccessRates =
+      service.extractSuccessRatesFromSimulation(latestSimulation);
+
+    const isValidSingleRate =
+      typeof strikeZoneSuccessRates === "number" &&
+      Number.isFinite(strikeZoneSuccessRates);
+    const isValidRateArray =
+      Array.isArray(strikeZoneSuccessRates) &&
+      strikeZoneSuccessRates.length > 0 &&
+      strikeZoneSuccessRates.every(
+        (rate) => typeof rate === "number" && Number.isFinite(rate)
+      );
+
+    if (!isValidSingleRate && !isValidRateArray) {
+      return res.status(400).json({
+        error:
+          "In der letzten Analyse wurden keine gueltigen successRates gefunden.",
+      });
+    }
+
+    const { fullGuildGP, analysisGuildGP } = service.getGuildGpForBotFromFile(
+      "./data/GuildData.json",
+      GUILD_GP_BUFFER
+    );
+    const finalPlan = service.runTbSimulationFromFiles(
+      analysisGuildGP,
+      strikeZoneSuccessRates
+    );
+
+    finalPlan.botRunMeta = {
+      fullGuildGP,
+      gpReduction: GUILD_GP_BUFFER,
+      usedGuildGP: analysisGuildGP,
+      source: "latest-analysis-params",
+      executedAt: new Date().toISOString(),
+    };
+
+    service.saveLatestSimulationToFile(finalPlan);
+
+    console.log(
+      `POST /tb/bot - Calculation saved (full GP: ${fullGuildGP}, used GP: ${analysisGuildGP}).`
+    );
+    res.json(finalPlan);
+  } catch (err) {
+    if (err.message === "Keine Simulationsdaten vorhanden.") {
+      return res.status(404).json({ error: err.message });
+    }
+    console.error("Fehler bei /tb/bot:", err.message);
+    res.status(500).json({ error: "Bot Simulation failed: " + err.message });
+  }
+});
+
+router.get("/tb/bot/latest", strategyAuth("admin"), async (req, res) => {
+  try {
+    const latestSimulation = service.getLatestSimulationFromFile();
+    const latestGuildUnits = service.getLatestGuildUnitsFromFile(
+      "./data/TestData.json"
+    );
+    const maxOwners = 4;
+    const phase = req.query.phase;
+
+    const payload = service.buildTbBotLatestPayload(
+      latestSimulation,
+      latestGuildUnits,
+      { maxOwners, phase }
+    );
+
+    res.json(payload);
+  } catch (err) {
+    if (err.message === "Keine Simulationsdaten vorhanden.") {
+      return res.status(404).json({ error: err.message });
+    }
+    console.error("Fehler bei /tb/bot/latest:", err.message);
+    res.status(500).json({ error: "Bot latest failed: " + err.message });
   }
 });
 
