@@ -331,7 +331,7 @@ router.get("/tb/bot/latest", strategyAuth("admin"), async (req, res) => {
     const latestGuildUnits = service.getLatestGuildUnitsFromFile(
       "./data/TestData.json"
     );
-    const maxOwners = 4;
+    const maxOwners = 2;
     const phase = req.query.phase;
 
     const payload = service.buildTbBotLatestPayload(
