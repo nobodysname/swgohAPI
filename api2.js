@@ -8,8 +8,6 @@ const { db } = require("./db");
 const { getImageFromRam } = require("./cacheImages");
 const router = express.Router();
 
-const GUILD_GP_BUFFER = 20000000;
-
 const logRouteUsage = db.prepare(`
   INSERT INTO route_usage (method, route, path, status)
   VALUES (?, ?, ?, ?)
@@ -246,6 +244,24 @@ router.post("/tb/simulate", strategyAuth("admin"), async (req, res) => {
       guildGP,
       strikeZoneSuccessRates
     );
+
+    const { fullGuildGP } = service.getGuildGpForBotFromFile(
+      "./data/GuildData.json",
+      0
+    );
+    const parsedGuildGP = Number(guildGP);
+    const gpReduction = Number.isFinite(parsedGuildGP)
+      ? Math.max(0, fullGuildGP - parsedGuildGP)
+      : 0;
+
+    finalPlan.simulationParams = {
+      ...(finalPlan.simulationParams || {}),
+      guildGP: parsedGuildGP,
+      successRates: strikeZoneSuccessRates,
+      gpReduction,
+      fullGuildGPAtCalculation: fullGuildGP,
+    };
+
     service.saveLatestSimulationToFile(finalPlan);
 
     console.log("POST /tb/simulate - Calculation saved.");
@@ -293,18 +309,30 @@ router.post("/tb/bot", strategyAuth("admin"), async (req, res) => {
       });
     }
 
-    const { fullGuildGP, analysisGuildGP } = service.getGuildGpForBotFromFile(
+    const lastGpReduction =
+      service.extractGpReductionFromSimulation(latestSimulation);
+    const { fullGuildGP } = service.getGuildGpForBotFromFile(
       "./data/GuildData.json",
-      GUILD_GP_BUFFER
+      0
     );
+    const analysisGuildGP = Math.max(0, fullGuildGP - lastGpReduction);
+
     const finalPlan = service.runTbSimulationFromFiles(
       analysisGuildGP,
       strikeZoneSuccessRates
     );
 
+    finalPlan.simulationParams = {
+      ...(finalPlan.simulationParams || {}),
+      guildGP: analysisGuildGP,
+      successRates: strikeZoneSuccessRates,
+      gpReduction: lastGpReduction,
+      fullGuildGPAtCalculation: fullGuildGP,
+    };
+
     finalPlan.botRunMeta = {
       fullGuildGP,
-      gpReduction: GUILD_GP_BUFFER,
+      gpReduction: lastGpReduction,
       usedGuildGP: analysisGuildGP,
       source: "latest-analysis-params",
       executedAt: new Date().toISOString(),

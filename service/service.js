@@ -1515,7 +1515,7 @@ function saveLatestSimulationToFile(
 
 function getGuildGpForBotFromFile(
   guildDataPath = "./data/GuildData.json",
-  gpReduction = 20000000
+  gpReduction = 0
 ) {
   if (!fs.existsSync(guildDataPath)) {
     throw new Error("GuildData.json wurde nicht gefunden.");
@@ -1535,6 +1535,30 @@ function getGuildGpForBotFromFile(
     fullGuildGP,
     analysisGuildGP: Math.max(0, fullGuildGP - gpReduction),
   };
+}
+
+function extractGpReductionFromSimulation(latestSimulation) {
+  const reductionFromParams = Number(latestSimulation?.simulationParams?.gpReduction);
+  if (Number.isFinite(reductionFromParams) && reductionFromParams >= 0) {
+    return reductionFromParams;
+  }
+
+  const reductionFromBotMeta = Number(latestSimulation?.botRunMeta?.gpReduction);
+  if (Number.isFinite(reductionFromBotMeta) && reductionFromBotMeta >= 0) {
+    return reductionFromBotMeta;
+  }
+
+  const fullGuildGPFromBotMeta = Number(latestSimulation?.botRunMeta?.fullGuildGP);
+  const usedGuildGP = Number(latestSimulation?.simulationParams?.guildGP);
+  if (
+    Number.isFinite(fullGuildGPFromBotMeta) &&
+    Number.isFinite(usedGuildGP) &&
+    fullGuildGPFromBotMeta >= usedGuildGP
+  ) {
+    return fullGuildGPFromBotMeta - usedGuildGP;
+  }
+
+  return 0;
 }
 
 function getLatestGuildUnitsFromFile(
@@ -1844,6 +1868,7 @@ module.exports = {
   getGuildGpForBotFromFile,
   getLatestGuildUnitsFromFile,
   extractSuccessRatesFromSimulation,
+  extractGpReductionFromSimulation,
   filterSimulationPathForBot,
   buildOpsScarcityList,
   buildTbBotLatestPayload,
